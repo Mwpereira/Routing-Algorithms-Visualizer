@@ -1,6 +1,7 @@
 import {DIJKSTRAS_ALGORITHM_PAGE, DISTANCE_VECTOR_ALGORITHM_PAGE} from "../constants/pages";
 import {DIJKSTRAS_ALGORITHM_ROUTE, DISTANCE_VECTOR_ALGORITHM_ROUTE, HOME_ROUTE} from "../constants/routes";
 import {Link} from "react-router-dom";
+import Logo from "../assets/img/logo.png"
 
 function Navbar() {
     return (
@@ -9,7 +10,7 @@ function Navbar() {
                 <div className="navbar-brand">
                     <Link to={HOME_ROUTE} rel="noopener noreferrer">
                         <figure>
-                            {/*<img alt="Busy Bits Logo" src={Logo} width="200"/>*/}
+                            <img alt="Routing Algorithms Logo" src={Logo} width="275"/>
                         </figure>
                     </Link>
 
@@ -21,7 +22,7 @@ function Navbar() {
                     </a>
                 </div>
                 <div className="navbar-menu" id="navbarMenu">
-                    <div className="navbar-end">
+                    <div className="navbar-end has-text-weight-semibold">
                         <Link className="navbar-item" to={HOME_ROUTE}>Home</Link>
                         <Link className="navbar-item" to={DIJKSTRAS_ALGORITHM_ROUTE}>{DIJKSTRAS_ALGORITHM_PAGE}</Link>
                         <Link className="navbar-item" to={DISTANCE_VECTOR_ALGORITHM_ROUTE}>{DISTANCE_VECTOR_ALGORITHM_PAGE}</Link>

@@ -9,6 +9,10 @@ function DistanceVectorAlgorithm() {
 
     return (
         <>
+            <h1 className={'title has-text-centered mt-6'}>Distance Vector Algorithm</h1>
+            <section>
+
+            </section>
         </>
     )
 }
