@@ -1,3 +1,3 @@
 export const setWindowTitle = (page) => {
-    document.title = `${page} - Busy Bits`
+    document.title = `${page} - Routing Algorithms Visualizer`
 }

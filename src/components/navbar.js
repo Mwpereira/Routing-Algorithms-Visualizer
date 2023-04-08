@@ -8,9 +8,9 @@ function Navbar() {
         <>
             <nav aria-label="main navigation" className="navbar box p-3 pb-0 mb-0" id="navbar" role="navigation">
                 <div className="navbar-brand">
-                    <Link to={HOME_ROUTE} rel="noopener noreferrer">
-                        <figure>
-                            <img alt="Routing Algorithms Logo" src={Logo} width="275"/>
+                    <Link rel="noopener noreferrer" to={HOME_ROUTE}>
+                        <figure className={'px-3'}>
+                            <img alt="Routing Algorithms Logo" src={Logo} width="325"/>
                         </figure>
                     </Link>
 

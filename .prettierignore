@@ -1,0 +1,13 @@
+/.git
+/.github
+/.svn
+/.hg
+/node_modules
+
+build
+dist
+
+.eslintrc.json
+.prettierrc.json
+README.md
+package.json
