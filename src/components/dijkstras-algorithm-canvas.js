@@ -59,17 +59,26 @@ function DijkstrasAlgorithmCanvas() {
                     const start = $(`#${prevSelectedNodes[0]}`);
                     const end = $(`#${node}`);
 
-                    const startOffset = start.offset();
-                    const endOffset = end.offset();
+                    const startPosition = start.position();
+                    const endPosition = end.position();
 
-                    const canvas = $("<canvas>").appendTo(containerRef.current);
-                    const ctx = canvas[0].getContext("2d");
-                    ctx.strokeStyle = "black";
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    ctx.moveTo(startOffset.left - containerRef.current.offsetLeft + 25, startOffset.top - containerRef.current.offsetTop + 25);
-                    ctx.lineTo(endOffset.left - containerRef.current.offsetLeft + 25, endOffset.top - containerRef.current.offsetTop + 25);
-                    ctx.stroke();
+                    // Calculate the length and angle of the line
+                    const deltaX = endPosition.left - startPosition.left;
+                    const deltaY = endPosition.top - startPosition.top;
+                    const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                    const angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+
+                    // Create the line element
+                    const line = $('<div>').addClass('line').css({ 
+                        width: length,
+                        transform: `rotate(${angle}deg)`,
+                        position: 'absolute',
+                        top: startPosition.top + 5,
+                        left: (startPosition.left - start.outerWidth() / 2) - 25,
+                    });
+
+                    // Add the line to the container
+                    $(containerRef.current).append(line);
 
                     successToast("Edge drawn successfully")
                     return [];

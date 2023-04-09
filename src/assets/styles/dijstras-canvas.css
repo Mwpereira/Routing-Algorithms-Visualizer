@@ -13,3 +13,9 @@
   cursor: grab;
   background-color: #B8E3FF;
 }
+
+.line {
+  height: 2px;
+  background-color: black;
+  z-index: 1;
+}
