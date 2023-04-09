@@ -7,29 +7,36 @@ import {errorToast, infoToast, successToast} from "../utilities/toast";
 import {dijkstraAlgorithm} from "../algorithms/dijkstra-algorithm";
 
 const DijkstrasAlgorithmCanvas = () => {
+    // State for nodes in the graph with initial values
     const [nodes, setNodes] = useState([
         {id: "A", x: 150, y: 100},
         {id: "B", x: 400, y: 100},
         {id: "C", x: 250, y: 250},
     ]);
 
+    // State for connections between nodes in the graph with initial values
     const [connections, setConnections] = useState([
         {endNodeId: "B", id: "AB", startNodeId: "A", weight: 10},
         {endNodeId: "C", id: "BC", startNodeId: "B", weight: 15},
     ]);
 
+    // State for currently selected connection ID
     const [selectedConnectionId, setSelectedConnectionId] = useState(null);
+    // State for currently selected nodes in the graph
     const [selectedNodes, setSelectedNodes] = useState([]);
+    // State for the selected weight of the connection
     const [selectedWeight, setSelectedWeight] = useState(null);
-    const [startingNode, setStartingNode] = useState("A"); // New state for the starting node
+    // New state for the starting node
+    const [startingNode, setStartingNode] = useState("A");
 
-
+    // Updates the position of a node in the graph
     const updateNodePosition = (nodeId, x, y) => {
         setNodes((prevNodes) =>
             prevNodes.map((node) => (node.id === nodeId ? {...node, x, y} : node))
         );
     };
 
+    // Updates the weight of a connection in the graph
     const updateConnectionWeight = (connectionId, weight) => {
         setConnections((prevConnections) =>
             prevConnections.map((connection) =>
@@ -38,6 +45,7 @@ const DijkstrasAlgorithmCanvas = () => {
         );
     };
 
+    // Handles the selection of a connection
     const handleSelectConnection = (connectionId) => {
         if (selectedConnectionId === connectionId) {
             setSelectedConnectionId(null);
@@ -49,6 +57,7 @@ const DijkstrasAlgorithmCanvas = () => {
         }
     };
 
+    // Handles the selection of a node in the graph
     const handleNodeClick = (nodeId, selected) => {
         if (selected) {
             setSelectedNodes((prevSelectedNodes) => [...prevSelectedNodes, nodeId]);
@@ -59,6 +68,7 @@ const DijkstrasAlgorithmCanvas = () => {
         }
     };
 
+    // Adds a new node to the graph
     const addNode = () => {
         const newNodeId = String.fromCharCode(
             Math.max(...nodes.map((node) => node.id.charCodeAt(0))) + 1
@@ -71,6 +81,7 @@ const DijkstrasAlgorithmCanvas = () => {
         setNodes((prevNodes) => [...prevNodes, newNode]);
     };
 
+// Connects two selected nodes in the graph
     const connectNodes = () => {
         if (selectedNodes.length === 2) {
             const newConnectionId = selectedNodes.join("");
@@ -199,7 +210,7 @@ const DijkstrasAlgorithmCanvas = () => {
                             </label>
                             <button className={'button is-dark'} type="submit">Update Weight</button>
                         </form>
-                </div>
+                    </div>
                 )}
                 <section className={'mt-5'}>
                     <label className={'label'}>Algorithm Actions:</label>
