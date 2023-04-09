@@ -8,20 +8,23 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {faRefresh} from "@fortawesome/free-solid-svg-icons/faRefresh";
 
+const defaultNodeData = [
+    {id: "A", x: 150, y: 100},
+    {id: "B", x: 400, y: 100},
+    {id: "C", x: 250, y: 250},
+]
+
+const defaultEdgeData = [
+    {endNodeId: "B", id: "AB", startNodeId: "A", weight: 10},
+    {endNodeId: "C", id: "BC", startNodeId: "B", weight: 15},
+]
 
 const DijkstrasAlgorithmCanvas = () => {
     // State for nodes in the graph with initial values
-    const [nodes, setNodes] = useState([
-        {id: "A", x: 150, y: 100},
-        {id: "B", x: 400, y: 100},
-        {id: "C", x: 250, y: 250},
-    ]);
+    const [nodes, setNodes] = useState(defaultNodeData);
 
     // State for edges between nodes in the graph with initial values
-    const [edges, setEdges] = useState([
-        {endNodeId: "B", id: "AB", startNodeId: "A", weight: 10},
-        {endNodeId: "C", id: "BC", startNodeId: "B", weight: 15},
-    ]);
+    const [edges, setEdges] = useState(defaultEdgeData);
 
     // State for currently selected edge ID
     const [selectedEdgeIds, setSelectedEdgeIds] = useState([]);
@@ -66,7 +69,7 @@ const DijkstrasAlgorithmCanvas = () => {
                     prevSelectedEdgeIds.filter((id) => id !== edgeId)
                 );
             } else {
-                setSelectedEdgeIds((prevSelectedEdgeIds) => [...prevSelectedEdgeIds, edgeId]);
+                setSelectedEdgeIds((prevSelectedEdgeIds) => [edgeId]);
             }
         }
     };
@@ -310,9 +313,10 @@ const DijkstrasAlgorithmCanvas = () => {
 
                                     infoToast('Calculating...')
 
-                                    const result = dijkstraAlgorithm({edges, nodes}, startingNode);
+                                    const result = dijkstraAlgorithm({edges, nodes}, startingNode); // Calculate the result
 
-                                    setDijkstraResult(result);
+                                    setSelectedNodes([]); // Unselect all nodes
+                                    setDijkstraResult(result); // Set the result
 
                                     dismissToast(2) // Remove the toast with the Assigned ID of 2 which is that of the infoToast
 
@@ -382,6 +386,9 @@ const DijkstrasAlgorithmCanvas = () => {
                             infoToast('Resetting Graph...')
                             setDijkstraResult({})
                             setCurrentStep(0)
+                            setSelectedEdgeIds([])
+                            setEdges(defaultEdgeData)
+                            setNodes(defaultNodeData)
                         }}
                     >
                         <FontAwesomeIcon icon={faRefresh}/>
