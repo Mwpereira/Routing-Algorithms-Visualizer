@@ -24,7 +24,7 @@ const DijkstrasAlgorithmCanvas = () => {
     ]);
 
     // State for currently selected edge ID
-    const [selectedEdgeId, setSelectedEdgeId] = useState(null);
+    const [selectedEdgeIds, setSelectedEdgeIds] = useState([]);
     // State for currently selected nodes in the graph
     const [selectedNodes, setSelectedNodes] = useState([]);
     // State for the selected weight of the edge
@@ -60,22 +60,36 @@ const DijkstrasAlgorithmCanvas = () => {
     // Handles the selection of an edge
     const handleSelectEdge = (edgeId) => {
         if (graphEditingMode()) {
-            if (selectedEdgeId === edgeId) {
-                setSelectedEdgeId(null);
-                setSelectedWeight(null);
+            const isSelected = selectedEdgeIds.includes(edgeId);
+            if (isSelected) {
+                setSelectedEdgeIds((prevSelectedEdgeIds) =>
+                    prevSelectedEdgeIds.filter((id) => id !== edgeId)
+                );
             } else {
-                setSelectedEdgeId(edgeId);
-                const edge = edges.find((e) => e.id === edgeId);
-                setSelectedWeight(edge.weight);
+                setSelectedEdgeIds((prevSelectedEdgeIds) => [...prevSelectedEdgeIds, edgeId]);
             }
         }
     };
 
+    // Select Edge for Dijkstra's Algorithm Instructions
     const selectEdge = (edgeId) => {
         const edge = edges.find((c) => c.id === edgeId || c.id === edgeId.split("").reverse().join(""))
 
-        if (edge && !(selectedEdgeId === edge.id)) {
-            setSelectedEdgeId(edge.id);
+        if (edge && !(selectedEdgeIds.includes(edge.id))) {
+            setSelectedEdgeIds([...selectedEdgeIds, edge.id]);
+        }
+    };
+
+    // Deselect Edge for Dijkstra's Algorithm Instructions
+    const deselectEdge = (edgeId) => {
+        const edge = edges.find((c) => c.id === edgeId || c.id === edgeId.split("").reverse().join(""))
+
+        if (edge) {
+            const index = selectedEdgeIds.indexOf(edge.id);
+            if (index !== -1) {
+                selectedEdgeIds.splice(index, 1);
+            }
+            setSelectedEdgeIds([...selectedEdgeIds]);
         }
     };
 
@@ -146,6 +160,26 @@ const DijkstrasAlgorithmCanvas = () => {
         );
     };
 
+    useEffect(() => {
+        if (!graphEditingMode() && edges.length > 0) {
+            edges.map((edge) => {
+                if (edge.id) {
+                    deselectEdge(edge.id);
+                }
+            })
+        }
+    }, [currentStep]);
+
+    useEffect(() => {
+        if (!graphEditingMode() && edges.length > 0) {
+            edges.map((edge) => {
+                if (edge.id) {
+                    deselectEdge(edge.id);
+                }
+            })
+        }
+    }, [currentStep]);
+
     return (
         <div className={'is-flex is-flex-direction-column mb-6'}>
             <div className="box">
@@ -163,7 +197,7 @@ const DijkstrasAlgorithmCanvas = () => {
                                         e.stopPropagation();
                                         handleSelectEdge(edge.id);
                                     }}
-                                    selected={selectedEdgeId === edge.id}
+                                    selected={selectedEdgeIds.includes(edge.id)}
                                     startNode={startNode}
                                     weight={edge.weight}
                                 />
@@ -214,19 +248,19 @@ const DijkstrasAlgorithmCanvas = () => {
                             </button>
                         </div>
                     </section>
-                    {selectedEdgeId && (
+                    {selectedEdgeIds.length === 1 && (
                         <div className={'column is-6 mt-2 pl-0 pb-0'}>
                             <form
                                 onSubmit={(e) => {
                                     e.preventDefault();
                                     if (selectedWeight !== null) {
-                                        updateEdgeWeight(selectedEdgeId, selectedWeight);
+                                        updateEdgeWeight(selectedEdgeIds[0], selectedWeight);
                                     }
-                                    setSelectedEdgeId(null); // Unselect the edge
+                                    setSelectedEdgeIds([]); // Unselect the edge
                                 }}
                             >
                                 <label className={'label'}>
-                                    Edge <span style={{color: '#f71a1a'}}>{selectedEdgeId}</span>:{" "}
+                                    Edge <span style={{color: '#f71a1a'}}>{selectedEdgeIds[0]}</span>:{" "}
                                     <input
                                         className={'input'}
                                         onChange={(e) => setSelectedWeight(parseInt(e.target.value))}
@@ -275,7 +309,7 @@ const DijkstrasAlgorithmCanvas = () => {
                                     }
 
                                     infoToast('Calculating...')
-                                    console.log(edges)
+
                                     const result = dijkstraAlgorithm({edges, nodes}, startingNode);
 
                                     setDijkstraResult(result);
