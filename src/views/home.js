@@ -11,7 +11,7 @@ function Home() {
         <>
             <h1 className={'title has-text-centered mt-6'}>Welcome!</h1>
             <section className="columns mb-6">
-                <div className="container column is-10">
+                <div className="container column is-12">
                     <div className="columns">
                         Test
                     </div>
