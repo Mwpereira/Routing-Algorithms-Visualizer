@@ -10,8 +10,12 @@ function Home() {
     return (
         <>
             <h1 className={'title has-text-centered mt-6'}>Welcome!</h1>
-            <section>
-
+            <section className="columns mb-6">
+                <div className="container column is-10">
+                    <div className="columns">
+                        Test
+                    </div>
+                </div>
             </section>
         </>
     )

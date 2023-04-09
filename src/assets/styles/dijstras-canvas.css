@@ -4,6 +4,10 @@
   height: 400px;
 }
 
+.RA-Container {
+  width: 800px;
+}
+
 .DraggableNode {
   position: absolute;
   width: 50px;
