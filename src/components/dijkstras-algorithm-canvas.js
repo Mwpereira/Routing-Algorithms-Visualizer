@@ -71,6 +71,14 @@ const DijkstrasAlgorithmCanvas = () => {
         }
     };
 
+    const selectEdge = (edgeId) => {
+        const edge = edges.find((c) => c.id === edgeId || c.id === edgeId.split("").reverse().join(""))
+
+        // if (edge) {
+        //     setSelectedEdgeId(edge.id);
+        // }
+    };
+
     // Handles the selection of a node in the graph
     const handleNodeClick = (nodeId, selected) => {
         if (graphEditingMode()) {
@@ -267,7 +275,7 @@ const DijkstrasAlgorithmCanvas = () => {
                                     }
 
                                     infoToast('Calculating...')
-
+                                    console.log(edges)
                                     const result = dijkstraAlgorithm({edges, nodes}, startingNode);
 
                                     setDijkstraResult(result);
@@ -299,16 +307,22 @@ const DijkstrasAlgorithmCanvas = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {dijkstraResult[currentStep].table.map((_, index) => (
-                                index !== dijkstraResult[currentStep].table[0].length ? (
+                            {dijkstraResult[currentStep].table.map((_, index) => {
+                                // Perform action within the map function
+                                if (dijkstraResult[currentStep].table[3][index]) {
+                                    selectEdge(dijkstraResult[currentStep].table[0][index] + dijkstraResult[currentStep].table[3][index]);
+                                }
+
+                                // Render the table row if the condition is met
+                                return index !== dijkstraResult[currentStep].table[0].length ? (
                                     <tr key={index}>
                                         <td>{dijkstraResult[currentStep].table[0][index]}</td>
                                         <td>{dijkstraResult[currentStep].table[1][index] ? 'true' : 'false'}</td>
                                         <td>{dijkstraResult[currentStep].table[2][index]}</td>
-                                        <td>{dijkstraResult[currentStep].table[3][index] ?? 'starting node'}</td>
+                                        <td>{dijkstraResult[currentStep].table[3][index] ?? 'none'}</td>
                                     </tr>
-                                ) : null
-                            ))}
+                                ) : null;
+                            })}
                             </tbody>
                         </table>
                     </section>
