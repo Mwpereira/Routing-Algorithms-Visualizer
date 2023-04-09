@@ -312,7 +312,7 @@ const DijkstrasAlgorithmCanvas = () => {
                             </tbody>
                         </table>
                     </section>
-                    <div className={'buttons is-grouped is-flex is-justify-content-space-between mt-5'}>
+                    <div className={'buttons is-grouped is-flex is-justify-content-space-between mt-5 pt-2'}>
                         <button
                             className="button"
                             onClick={() => setCurrentStep((prevStep) => Math.max(prevStep - 1, 0))}
@@ -329,11 +329,15 @@ const DijkstrasAlgorithmCanvas = () => {
                         </button>
                     </div>
                     <button
-                        className="button is-info"
-                        onClick={() => setDijkstraResult({})}
+                        className="button is-info mt-5"
+                        onClick={() => {
+                            infoToast('Resetting Graph...')
+                            setDijkstraResult({})
+                            setCurrentStep(0)
+                        }}
                     >
                         <FontAwesomeIcon icon={faRefresh}/>
-                        <p className={'ml-3'}>Restart</p>
+                        <p className={'ml-3'}>Reset</p>
                     </button>
                 </div>
             )}

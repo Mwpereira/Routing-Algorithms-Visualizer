@@ -85,9 +85,9 @@ function dijkstra(graph, startNode) {
             if (distance < distances[neighbor]) {
                 neighbor_text += `We find that the distance from ${currentNode} to ${neighbor} is closer than` +
                     ` the value in the table therefore we changed value ${distances[neighbor]} to ${distance}. ` +
-                    `EXPLANATION: We do this ` +
+                    `Explanation: We do this ` +
                     `by comparing the shortest distance to ${neighbor} in the table compared to the closest distance ` +
-                    `to ${neighbor} from ${currentNode} + distance to ${currentNode}` + `\n\n`;
+                    `to ${neighbor} from ${currentNode} + distance to ${currentNode}.` + `\n\n`;
 
                 distances[neighbor] = distance;
                 prev[neighbor] = currentNode;
@@ -110,10 +110,6 @@ function dijkstra(graph, startNode) {
         console.table(table)
         console.log(text)
     }
-
-    console.log(distances)
-    console.log(prev)
-    console.log(steps)
 
     return distances, prev, steps;
 }
