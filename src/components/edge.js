@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const Connection = ({
+const Edge = ({
                         startNode,
                         endNode,
                         weight,
@@ -67,4 +67,4 @@ const Connection = ({
     );
 };
 
-export default Connection;
+export default Edge;

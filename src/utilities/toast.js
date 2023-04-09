@@ -15,3 +15,7 @@ export const infoToast = (message) => {
 export const errorToast = (message) => {
     toast.error(message, { toastId: 1})
 }
+
+export const dismissToast = (id) => {
+    toast.dismiss(id)
+}

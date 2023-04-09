@@ -1,8 +1,10 @@
+// This file contains the implementation of the Dijkstra's algorithm
 export const dijkstraAlgorithm = (graph, startNode) => {
     const convertedGraph = convertCanvasGraphOutput(graph);
-    dijkstra(convertedGraph, startNode)
+    return dijkstra(convertedGraph, startNode);
 }
 
+// Converts the graph's output from canvas-graph to the format that the algorithm expects
 function convertCanvasGraphOutput(graph) {
     let nodes = graph.nodes;
     let edges = graph.connections;

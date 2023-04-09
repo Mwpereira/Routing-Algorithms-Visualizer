@@ -1,12 +1,16 @@
 import React, {useState} from "react";
 import DraggableNode from "../components/draggable-node";
-import Connection from "../components/connection";
+import Edge from "./edge";
 import "../assets/styles/dijstras-canvas.css"
-import connection from "../components/connection";
-import {errorToast, infoToast, successToast} from "../utilities/toast";
+import {dismissToast, errorToast, infoToast, successToast} from "../utilities/toast";
 import {dijkstraAlgorithm} from "../algorithms/dijkstra-algorithm";
+import useStore from "../store";
+import {toast} from "react-toastify";
 
 const DijkstrasAlgorithmCanvas = () => {
+    // Store
+    const {dijkstraResult, setDijkstraResult} = useStore();
+
     // State for nodes in the graph with initial values
     const [nodes, setNodes] = useState([
         {id: "A", x: 150, y: 100},
@@ -132,7 +136,7 @@ const DijkstrasAlgorithmCanvas = () => {
                             const endNode = nodes.find((node) => node.id === connection.endNodeId);
 
                             return (
-                                <Connection
+                                <Edge
                                     endNode={endNode}
                                     key={connection.id}
                                     onSelect={(e) => {
@@ -164,6 +168,7 @@ const DijkstrasAlgorithmCanvas = () => {
                     ))}
                 </div>
             </div>
+            {Object.keys(dijkstraResult).length === 0 && (
             <section>
                 <label className={'label'}>Graph Actions:</label>
                 <section className={'is-flex is-justify-content-space-between'}>
@@ -250,7 +255,13 @@ const DijkstrasAlgorithmCanvas = () => {
 
                                 infoToast('Calculating...')
 
-                                dijkstraAlgorithm({connections, nodes}, startingNode);
+                                const result = dijkstraAlgorithm({connections, nodes}, startingNode);
+
+                                setDijkstraResult(result);
+
+                                dismissToast(2) // Remove the toast with the Assigned ID of 2 which is that of the infoToast
+
+                                successToast('Calculation complete!');
                             }}
                         >
                             Calculate
@@ -258,6 +269,7 @@ const DijkstrasAlgorithmCanvas = () => {
                     </div>
                 </section>
             </section>
+            )}
         </div>
     );
 };
