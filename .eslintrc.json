@@ -58,6 +58,7 @@
     "react/jsx-uses-vars": "warn",
     "react/no-did-update-set-state": "warn",
     "react/no-unknown-property": "warn",
+    "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "sort-keys-fix/sort-keys-fix": "warn"
   }
