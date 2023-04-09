@@ -14,8 +14,8 @@ const DijkstrasAlgorithmCanvas = () => {
     ]);
 
     const [connections, setConnections] = useState([
-        {id: "AB", startNodeId: "A", endNodeId: "B", weight: 10},
-        {id: "BC", startNodeId: "B", endNodeId: "C", weight: 15},
+        {endNodeId: "B", id: "AB", startNodeId: "A", weight: 10},
+        {endNodeId: "C", id: "BC", startNodeId: "B", weight: 15},
     ]);
 
     const [selectedConnectionId, setSelectedConnectionId] = useState(null);
@@ -82,9 +82,9 @@ const DijkstrasAlgorithmCanvas = () => {
                 )
             ) {
                 const newConnection = {
+                    endNodeId: selectedNodes[1],
                     id: newConnectionId,
                     startNodeId: selectedNodes[0],
-                    endNodeId: selectedNodes[1],
                     weight: 1,
                 };
                 setConnections((prevConnections) => [...prevConnections, newConnection]);
@@ -115,22 +115,22 @@ const DijkstrasAlgorithmCanvas = () => {
         <div className={'is-flex is-flex-direction-column mb-6'}>
             <div className="box">
                 <div className="DroppableArea">
-                    <svg width="100%" height="100%">
+                    <svg height="100%" width="100%">
                         {connections.map((connection) => {
                             const startNode = nodes.find((node) => node.id === connection.startNodeId);
                             const endNode = nodes.find((node) => node.id === connection.endNodeId);
 
                             return (
                                 <Connection
-                                    key={connection.id}
-                                    startNode={startNode}
                                     endNode={endNode}
-                                    weight={connection.weight}
-                                    selected={selectedConnectionId === connection.id}
+                                    key={connection.id}
                                     onSelect={(e) => {
                                         e.stopPropagation();
                                         handleSelectConnection(connection.id);
                                     }}
+                                    selected={selectedConnectionId === connection.id}
+                                    startNode={startNode}
+                                    weight={connection.weight}
                                 />
                             );
                         })}
@@ -139,16 +139,16 @@ const DijkstrasAlgorithmCanvas = () => {
                         <DraggableNode
                             key={node.id}
                             nodeId={node.id}
-                            x={node.x}
-                            y={node.y}
-                            selected={selectedNodes.includes(node.id)}
-                            onDrag={(x, y) => {
-                                updateNodePosition(node.id, x, y);
-                            }}
                             onClick={(selected) => {
                                 handleNodeClick(node.id, selected);
                             }}
+                            onDrag={(x, y) => {
+                                updateNodePosition(node.id, x, y);
+                            }}
                             onRemove={() => removeNode(node.id)}
+                            selected={selectedNodes.includes(node.id)}
+                            x={node.x}
+                            y={node.y}
                         />
                     ))}
                 </div>
@@ -192,9 +192,9 @@ const DijkstrasAlgorithmCanvas = () => {
                                 Connection <span style={{color: '#f71a1a'}}>{selectedConnectionId}</span>:{" "}
                                 <input
                                     className={'input'}
+                                    onChange={(e) => setSelectedWeight(parseInt(e.target.value))}
                                     type="number"
                                     value={selectedWeight}
-                                    onChange={(e) => setSelectedWeight(parseInt(e.target.value))}
                                 />
                             </label>
                             <button className={'button is-dark'} type="submit">Update Weight</button>
@@ -210,11 +210,11 @@ const DijkstrasAlgorithmCanvas = () => {
                             <div className="select">
                                 <select
                                     id="starting-node"
-                                    value={startingNode}
                                     onChange={(e) => setStartingNode(e.target.value)}
                                     required={true}
+                                    value={startingNode}
                                 >
-                                    <option value="" disabled>Select starting node</option>
+                                    <option disabled value="">Select starting node</option>
                                     {nodes.map((node) => (
                                         <option key={node.id} value={node.id}>
                                             {node.id}
@@ -239,7 +239,7 @@ const DijkstrasAlgorithmCanvas = () => {
 
                                 infoToast('Calculating...')
 
-                                dijkstraAlgorithm({nodes, connections}, startingNode);
+                                dijkstraAlgorithm({connections, nodes}, startingNode);
                             }}
                         >
                             Calculate

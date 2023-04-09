@@ -20,34 +20,34 @@ const Connection = ({
     return (
         <>
             <line
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
+                onClick={onSelect}
                 stroke={selected ? "#f71a1a" : "#ccc"}
                 strokeWidth="3"
-                onClick={onSelect}
+                x1={x1}
+                x2={x2}
+                y1={y1}
+                y2={y2}
             />
             <g onClick={onSelect}>
                 <rect
-                    x={cx - 16}
-                    y={cy - 16}
-                    width="32"
+                    fill="white"
                     height="32"
                     rx="4"
                     ry="4"
-                    fill="white"
                     stroke="black"
                     strokeWidth="1"
+                    width="32"
+                    x={cx - 16}
+                    y={cy - 16}
                 />
                 <text
-                    x={cx}
-                    y={cy}
-                    dy=".3em"
-                    textAnchor="middle"
                     cursor="pointer"
+                    dy=".3em"
                     fontSize={"1.2em"}
                     fontWeight={selected ? "bold" : "600"}
+                    textAnchor="middle"
+                    x={cx}
+                    y={cy}
                 >
                     {weight}
                 </text>
@@ -55,11 +55,11 @@ const Connection = ({
             {selected && (
                 <g transform={`translate(${cx}, ${cy}) rotate(${angle * (180 / Math.PI)})`}>
                     <rect
+                        fill="transparent"
+                        height="20"
+                        width="20"
                         x="-10"
                         y="-10"
-                        width="20"
-                        height="20"
-                        fill="transparent"
                     />
                 </g>
             )}

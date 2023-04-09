@@ -15,26 +15,26 @@ const DraggableNode = ({
     useEffect(() => {
         $(nodeRef.current).draggable({
             containment: "parent",
-            grid: [50, 50],
             drag: function (event, ui) {
                 onDrag(ui.position.left, ui.position.top);
             },
+            grid: [50, 50],
         });
     }, [onDrag]);
 
     return (
         <div
             className="DraggableNode"
-            ref={nodeRef}
-            style={{
-                left: x,
-                top: y,
-                backgroundColor: selected ? "lightblue" : "#fff",
-            }}
             onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
                 onClick(!selected);
+            }}
+            ref={nodeRef}
+            style={{
+                backgroundColor: selected ? "lightblue" : "#fff",
+                left: x,
+                top: y,
             }}
         >
             <span>{nodeId}</span>
