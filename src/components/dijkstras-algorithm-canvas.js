@@ -2,6 +2,7 @@ import {useState, useEffect, useRef, useCallback} from "react";
 import $ from "jquery";
 import "jquery-ui/ui/widgets/draggable";
 import "../assets/styles/dijstras-canvas.css";
+import {successToast, warningToast} from "../utilities/toast";
 
 function getSelectedValue() {
     return $('input[name="toggleAction"]:checked').val();
@@ -45,13 +46,18 @@ function DijkstrasAlgorithmCanvas() {
         }
     };
 
-    const handleNodeClick = useCallback((selectedAction, selectedNodes) => {
-        if (selectedAction) {
+    const handleNodeClick = useCallback((selectedAction, node) => {
+        setSelectedNodes((prevSelectedNodes) => {
+            console.log(prevSelectedNodes + " " + node)
+            if (prevSelectedNodes.includes(node)) {
+                warningToast("Node already selected")
+                return [];
+            }
             if (selectedAction === "connectNodes") {
-                if (selectedNodes.length === 2) {
+                if (prevSelectedNodes.length === 1) {
                     // Draw line between nodes
-                    const start = $(`#${selectedNodes[0]}`);
-                    const end = $(`#${selectedNodes[1]}`);
+                    const start = $(`#${prevSelectedNodes[0]}`);
+                    const end = $(`#${node}`);
 
                     const startOffset = start.offset();
                     const endOffset = end.offset();
@@ -65,18 +71,21 @@ function DijkstrasAlgorithmCanvas() {
                     ctx.lineTo(endOffset.left - containerRef.current.offsetLeft + 25, endOffset.top - containerRef.current.offsetTop + 25);
                     ctx.stroke();
 
-                    setSelectedNodes([]);
+                    successToast("Edge drawn successfully")
+                    return [];
                 } else {
-                    setSelectedNodes([...selectedNodes, selectedNodes]);
+                    return [...prevSelectedNodes, node];
                 }
             } else {
                 // Delete node/edge
-                $(`#${selectedNodes}`).remove(); // Remove selected node
-                setUsedLetters((prevLetters) => prevLetters.filter((letter) => letter !== selectedNodes)); // Put the letter back to the alphabet array
-                setSelectedNodes([]);
+                $(`#${node}`).remove(); // Remove selected node
+                setUsedLetters((prevLetters) =>
+                    prevLetters.filter((letter) => letter !== node)
+                ); // Put the letter back to the alphabet array
+                return [];
             }
-        }
-    }, [selectedNodes]);
+        });
+    }, []);
 
     const handleAddNodeClick = () => {
         const letter = getNextLetter()
