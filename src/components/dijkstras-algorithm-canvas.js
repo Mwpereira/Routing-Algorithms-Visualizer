@@ -288,7 +288,7 @@ const DijkstrasAlgorithmCanvas = () => {
                                 required={true}
                                 value={startingNode}
                             >
-                                <option disabled value="">Select starting node</option>
+                                <option disabled value="A">Select starting node</option>
                                 {nodes.map((node) => (
                                     <option key={node.id} value={node.id}>
                                         {node.id}
