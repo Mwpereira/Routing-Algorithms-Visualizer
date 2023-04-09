@@ -74,9 +74,9 @@ const DijkstrasAlgorithmCanvas = () => {
     const selectEdge = (edgeId) => {
         const edge = edges.find((c) => c.id === edgeId || c.id === edgeId.split("").reverse().join(""))
 
-        // if (edge) {
-        //     setSelectedEdgeId(edge.id);
-        // }
+        if (edge && !(selectedEdgeId === edge.id)) {
+            setSelectedEdgeId(edge.id);
+        }
     };
 
     // Handles the selection of a node in the graph
