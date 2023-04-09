@@ -7,7 +7,7 @@ export const dijkstraAlgorithm = (graph, startNode) => {
 // Converts the graph's output from canvas-graph to the format that the algorithm expects
 function convertCanvasGraphOutput(graph) {
     let nodes = graph.nodes;
-    let edges = graph.connections;
+    let edges = graph.edges;
     let newGraph = {};
 
     for (let i = 0; i < nodes.length; i++) {
