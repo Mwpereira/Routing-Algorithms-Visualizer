@@ -1,6 +1,29 @@
 export const dijkstraAlgorithm = (graph, startNode) => {
-    dijkstra(graph, startNode)
+    const convertedGraph = convertCanvasGraphOutput(graph);
+    dijkstra(convertedGraph, startNode)
 }
+
+function convertCanvasGraphOutput(graph) {
+    let nodes = graph.nodes;
+    let edges = graph.connections;
+    let newGraph = {};
+
+    for (let i = 0; i < nodes.length; i++) {
+        const currentNodeId = nodes[i].id;
+        newGraph[currentNodeId] = {}; // Initialize an empty object for the current node ID
+    }
+
+    for (let j = 0; j < edges.length; j++) {
+        let currentEdge = edges[j];
+
+        // Set the edge weight for both directions
+        newGraph[currentEdge.startNodeId][currentEdge.endNodeId] = currentEdge.weight;
+        newGraph[currentEdge.endNodeId][currentEdge.startNodeId] = currentEdge.weight;
+    }
+
+    return newGraph;
+}
+
 
 // We calculate which of the node in the remaining graph has the minimum distance to already explored graph
 function calculateMinDistance(queue, distances) {
@@ -84,7 +107,6 @@ function dijkstra(graph, startNode) {
 
         console.table(table)
         console.log(text)
-
     }
 
     console.log(distances)

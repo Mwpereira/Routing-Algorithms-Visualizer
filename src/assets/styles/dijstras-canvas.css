@@ -1,21 +1,23 @@
-.circle {
-  border-radius: 50%;
+.DroppableArea {
+  position: relative;
+  width: 800px;
+  height: 400px;
+}
+
+.DraggableNode {
+  position: absolute;
   width: 50px;
   height: 50px;
-  background: #fff;
-  border: 2px solid #000;
-  color: #000;
-  text-align: center;
-  font-size: 32px;
+  border-radius: 50%;
+
+  border: black solid 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: move;
 }
 
-.circle:hover {
-  cursor: grab;
-  background-color: #B8E3FF;
-}
-
-.line {
-  height: 2px;
-  background-color: black;
-  z-index: 1;
+.DraggableNode span {
+  color: black;
+  font-weight: bold;
 }

@@ -1,164 +1,255 @@
-import {useState, useEffect, useRef, useCallback} from "react";
-import $ from "jquery";
-import "jquery-ui/ui/widgets/draggable";
-import "../assets/styles/dijstras-canvas.css";
-import {successToast, warningToast} from "../utilities/toast";
+import React, {useState} from "react";
+import DraggableNode from "../components/draggable-node";
+import Connection from "../components/connection";
+import "../assets/styles/dijstras-canvas.css"
+import connection from "../components/connection";
+import {errorToast, infoToast, successToast} from "../utilities/toast";
+import {dijkstraAlgorithm} from "../algorithms/dijkstra-algorithm";
 
-function getSelectedValue() {
-    return $('input[name="toggleAction"]:checked').val();
-}
+const DijkstrasAlgorithmCanvas = () => {
+    const [nodes, setNodes] = useState([
+        {id: "A", x: 150, y: 100},
+        {id: "B", x: 400, y: 100},
+        {id: "C", x: 250, y: 250},
+    ]);
 
-function DijkstrasAlgorithmCanvas() {
-    const containerRef = useRef(null);
-    const draggableRef = useRef(null);
-    const [letters, setLetters] = useState("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-    const [usedLetters, setUsedLetters] = useState([]);
+    const [connections, setConnections] = useState([
+        {id: "AB", startNodeId: "A", endNodeId: "B", weight: 10},
+        {id: "BC", startNodeId: "B", endNodeId: "C", weight: 15},
+    ]);
+
+    const [selectedConnectionId, setSelectedConnectionId] = useState(null);
     const [selectedNodes, setSelectedNodes] = useState([]);
+    const [selectedWeight, setSelectedWeight] = useState(null);
+    const [startingNode, setStartingNode] = useState("A"); // New state for the starting node
 
-    useEffect(() => {
-        if (containerRef.current && draggableRef.current) {
-            $(draggableRef.current).draggable({
-                containment: containerRef.current,
-            });
-        }
-    }, [containerRef, draggableRef]);
 
-    // Gets the next available letter to use for a node
-    const getNextLetter = () => {
-        for (let i = 0; i < letters.length; i++) {
-            const letter = letters.charAt(i);
-            if (!usedLetters.includes(letter)) {
-                setUsedLetters((prevLetters) => [...prevLetters, letter]);
-                return letter;
-            }
-        }
-        return "";
+    const updateNodePosition = (nodeId, x, y) => {
+        setNodes((prevNodes) =>
+            prevNodes.map((node) => (node.id === nodeId ? {...node, x, y} : node))
+        );
     };
 
-    // Handles the drag event for a node (updates the drawing of an edge if effected) -- ACTUALLY NO
-    const handleNodeDrag = (event, ui) => {
-        const node = ui.helper;
-        const position = node.position();
+    const updateConnectionWeight = (connectionId, weight) => {
+        setConnections((prevConnections) =>
+            prevConnections.map((connection) =>
+                connection.id === connectionId ? {...connection, weight} : connection
+            )
+        );
+    };
 
-        // Only log the final position when dragging is complete
-        if (event.type === "dragstop") {
-            console.log(`Node ${node.text()} final position: ${position.top}, ${position.left}`);
+    const handleSelectConnection = (connectionId) => {
+        if (selectedConnectionId === connectionId) {
+            setSelectedConnectionId(null);
+            setSelectedWeight(null);
+        } else {
+            setSelectedConnectionId(connectionId);
+            const connection = connections.find((c) => c.id === connectionId);
+            setSelectedWeight(connection.weight);
         }
     };
 
-    const handleNodeClick = useCallback((selectedAction, node) => {
-        setSelectedNodes((prevSelectedNodes) => {
-            console.log(prevSelectedNodes + " " + node)
-            if (prevSelectedNodes.includes(node)) {
-                warningToast("Node already selected")
-                return [];
+    const handleNodeClick = (nodeId, selected) => {
+        if (selected) {
+            setSelectedNodes((prevSelectedNodes) => [...prevSelectedNodes, nodeId]);
+        } else {
+            setSelectedNodes((prevSelectedNodes) =>
+                prevSelectedNodes.filter((id) => id !== nodeId)
+            );
+        }
+    };
+
+    const addNode = () => {
+        const newNodeId = String.fromCharCode(
+            Math.max(...nodes.map((node) => node.id.charCodeAt(0))) + 1
+        );
+        const newNode = {
+            id: newNodeId,
+            x: Math.floor(Math.random() * 750),
+            y: Math.floor(Math.random() * 350),
+        };
+        setNodes((prevNodes) => [...prevNodes, newNode]);
+    };
+
+    const connectNodes = () => {
+        if (selectedNodes.length === 2) {
+            const newConnectionId = selectedNodes.join("");
+            if (
+                !connections.some(
+                    (connection) =>
+                        connection.id === newConnectionId ||
+                        connection.id === newConnectionId.split("").reverse().join("")
+                )
+            ) {
+                const newConnection = {
+                    id: newConnectionId,
+                    startNodeId: selectedNodes[0],
+                    endNodeId: selectedNodes[1],
+                    weight: 1,
+                };
+                setConnections((prevConnections) => [...prevConnections, newConnection]);
+                setSelectedNodes([]);
             }
-            if (selectedAction === "connectNodes") {
-                if (prevSelectedNodes.length === 1) {
-                    // Draw line between nodes
-                    const start = $(`#${prevSelectedNodes[0]}`);
-                    const end = $(`#${node}`);
+        }
+    };
 
-                    const startPosition = start.position();
-                    const endPosition = end.position();
+    const removeNode = (nodeId) => {
+        // Remove node from nodes list
+        setNodes((prevNodes) => prevNodes.filter((node) => node.id !== nodeId));
 
-                    // Calculate the length and angle of the line
-                    const deltaX = endPosition.left - startPosition.left;
-                    const deltaY = endPosition.top - startPosition.top;
-                    const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-                    const angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+        // Remove connections involving the node
+        setConnections((prevConnections) =>
+            prevConnections.filter(
+                (connection) =>
+                    connection.startNodeId !== nodeId && connection.endNodeId !== nodeId
+            )
+        );
 
-                    // Create the line element
-                    const line = $('<div>').addClass('line').css({ 
-                        width: length,
-                        transform: `rotate(${angle}deg)`,
-                        position: 'absolute',
-                        top: startPosition.top + 5,
-                        left: (startPosition.left - start.outerWidth() / 2) - 25,
-                    });
-
-                    // Add the line to the container
-                    $(containerRef.current).append(line);
-
-                    successToast("Edge drawn successfully")
-                    return [];
-                } else {
-                    return [...prevSelectedNodes, node];
-                }
-            } else {
-                // Delete node/edge
-                $(`#${node}`).remove(); // Remove selected node
-                setUsedLetters((prevLetters) =>
-                    prevLetters.filter((letter) => letter !== node)
-                ); // Put the letter back to the alphabet array
-                return [];
-            }
-        });
-    }, []);
-
-    const handleAddNodeClick = () => {
-        const letter = getNextLetter()
-        const newElement = $("<div>")
-            .addClass("draggable-component")
-            .addClass("circle")
-            .attr("id", letter)
-            .css({
-                position: "absolute",
-                top: `50px`,
-                left: `100px`,
-            })
-            .text(`${letter}`)
-            .click(() => handleNodeClick(getSelectedValue(), letter));
-
-        $(draggableRef.current).append(newElement);
-
-        $(newElement).draggable({
-            containment: containerRef.current,
-            stop: handleNodeDrag,
-        });
+        // Remove node from the selected nodes list
+        setSelectedNodes((prevSelectedNodes) =>
+            prevSelectedNodes.filter((id) => id !== nodeId)
+        );
     };
 
     return (
-        <div className={'is-flex is-flex-direction-column'} style={{width: "100%"}}>
-            <section className={'box'} ref={containerRef} style={{height: 600}}>
-                <div ref={draggableRef} style={{width: 50, height: 50}}>
-                    {/* draggable component content here */}
+        <div className={'is-flex is-flex-direction-column mb-6'}>
+            <div className="box">
+                <div className="DroppableArea">
+                    <svg width="100%" height="100%">
+                        {connections.map((connection) => {
+                            const startNode = nodes.find((node) => node.id === connection.startNodeId);
+                            const endNode = nodes.find((node) => node.id === connection.endNodeId);
+
+                            return (
+                                <Connection
+                                    key={connection.id}
+                                    startNode={startNode}
+                                    endNode={endNode}
+                                    weight={connection.weight}
+                                    selected={selectedConnectionId === connection.id}
+                                    onSelect={(e) => {
+                                        e.stopPropagation();
+                                        handleSelectConnection(connection.id);
+                                    }}
+                                />
+                            );
+                        })}
+                    </svg>
+                    {nodes.map((node) => (
+                        <DraggableNode
+                            key={node.id}
+                            nodeId={node.id}
+                            x={node.x}
+                            y={node.y}
+                            selected={selectedNodes.includes(node.id)}
+                            onDrag={(x, y) => {
+                                updateNodePosition(node.id, x, y);
+                            }}
+                            onClick={(selected) => {
+                                handleNodeClick(node.id, selected);
+                            }}
+                            onRemove={() => removeNode(node.id)}
+                        />
+                    ))}
                 </div>
-            </section>
-            <section className={'my-5'}>
-                <label className={'label'}>Actions:</label>
-                <div className={'is-flex is-justify-content-space-between'}>
+            </div>
+            <section>
+                <label className={'label'}>Graph Actions:</label>
+                <section className={'is-flex is-justify-content-space-between'}>
                     <div className={'buttons is-grouped'}>
-                        <button className={'button'} onClick={handleAddNodeClick}>Add Node</button>
+                        <button className={'button'} onClick={addNode}>
+                            Add Node
+                        </button>
+                        <button
+                            className={'button'}
+                            onClick={connectNodes}
+                        >
+                            Connect Nodes
+                        </button>
+                        <button
+                            className={'button'}
+                            onClick={() => {
+                                selectedNodes.forEach((nodeId) => removeNode(nodeId));
+                                setSelectedNodes([]);
+                            }}
+                        >
+                            Delete Node
+                        </button>
                     </div>
-
-                    <div className={'control'}>
-                        <label className="radio mr-5">
-                            <input
-                                defaultChecked={true}
-                                className={'mr-2'}
-                                type="radio"
-                                name="toggleAction"
-                                value="connectNodes"
-                            />
-                            Connect Nodes (Draw Edge)
-                        </label>
-                        <label className="radio">
-                            <input
-                                className={'mr-2'}
-                                type="radio"
-                                name="toggleAction"
-                                value="deleteNodeEdge"
-                            />
-                            Delete Node/Edge
-                        </label>
-                    </div>
-
-                    <button className={'button is-primary'} onClick={handleAddNodeClick}>Calculate</button>
+                </section>
+                {selectedConnectionId && (
+                    <div className={'column is-6 mt-2 pl-0 pb-0'}>
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                if (selectedWeight !== null) {
+                                    updateConnectionWeight(selectedConnectionId, selectedWeight);
+                                }
+                                setSelectedConnectionId(null); // Unselect the edge
+                            }}
+                        >
+                            <label className={'label'}>
+                                Connection <span style={{color: '#f71a1a'}}>{selectedConnectionId}</span>:{" "}
+                                <input
+                                    className={'input'}
+                                    type="number"
+                                    value={selectedWeight}
+                                    onChange={(e) => setSelectedWeight(parseInt(e.target.value))}
+                                />
+                            </label>
+                            <button className={'button is-dark'} type="submit">Update Weight</button>
+                        </form>
                 </div>
+                )}
+                <section className={'mt-5'}>
+                    <label className={'label'}>Algorithm Actions:</label>
+                    <div className={'is-flex is-justify-content-space-between is-align-items-center'}>
+                        <span>
+                        <p>Starting Node</p>
+                        <div className="select">
+                            <div className="select">
+                                <select
+                                    id="starting-node"
+                                    value={startingNode}
+                                    onChange={(e) => setStartingNode(e.target.value)}
+                                    required={true}
+                                >
+                                    <option value="" disabled>Select starting node</option>
+                                    {nodes.map((node) => (
+                                        <option key={node.id} value={node.id}>
+                                            {node.id}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                        </span>
+                        <button
+                            className={'button is-info'}
+                            onClick={() => {
+                                if (nodes.length < 2) {
+                                    errorToast('Please add at least two nodes');
+                                    return;
+                                }
+
+                                if (!nodes.find((node) => node.id === startingNode)) {
+                                    errorToast('Please select a starting node');
+                                    return;
+                                }
+
+                                infoToast('Calculating...')
+
+                                dijkstraAlgorithm({nodes, connections}, startingNode);
+                            }}
+                        >
+                            Calculate
+                        </button>
+                    </div>
+                </section>
             </section>
         </div>
     );
-}
+};
+
 
 export default DijkstrasAlgorithmCanvas;
