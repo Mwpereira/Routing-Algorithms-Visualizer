@@ -10,10 +10,3 @@ minify = true
 pretty_urls = true
 [build.processing.images]
 compress = true
-
-[[redirects]]
-from = "/*"
-to = "https://routing-algorithms.netlify.app/"
-status = 200
-force = true
-headers = { X-From = "Netlify" }
