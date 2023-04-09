@@ -19,8 +19,7 @@
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
-    "web-vitals": "^2.1.4",
-    "zustand": "^4.3.7"
+    "web-vitals": "^2.1.4"
   },
   "devDependencies": {
     "eslint-plugin-prettier": "^4.2.1",

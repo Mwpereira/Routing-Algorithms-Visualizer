@@ -9,6 +9,7 @@ const DraggableNode = ({
                            onDrag,
                            selected,
                            onClick,
+                           disableDragging
                        }) => {
     const nodeRef = useRef(null);
 
@@ -19,6 +20,7 @@ const DraggableNode = ({
                 onDrag(ui.position.left, ui.position.top);
             },
             grid: [50, 50],
+            disabled: disableDragging,
         });
     }, [onDrag]);
 

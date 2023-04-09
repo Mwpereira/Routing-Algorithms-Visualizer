@@ -1,15 +1,15 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import DraggableNode from "../components/draggable-node";
 import Edge from "./edge";
 import "../assets/styles/dijstras-canvas.css"
 import {dismissToast, errorToast, infoToast, successToast} from "../utilities/toast";
 import {dijkstraAlgorithm} from "../algorithms/dijkstra-algorithm";
-import useStore from "../store";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {faRefresh} from "@fortawesome/free-solid-svg-icons/faRefresh";
+
 
 const DijkstrasAlgorithmCanvas = () => {
-    // Store
-    const {dijkstraResult, setDijkstraResult} = useStore();
-
     // State for nodes in the graph with initial values
     const [nodes, setNodes] = useState([
         {id: "A", x: 150, y: 100},
@@ -29,8 +29,17 @@ const DijkstrasAlgorithmCanvas = () => {
     const [selectedNodes, setSelectedNodes] = useState([]);
     // State for the selected weight of the edge
     const [selectedWeight, setSelectedWeight] = useState(null);
-    // New state for the starting node
+    // State for the starting node
     const [startingNode, setStartingNode] = useState("A");
+    // State for steps in the Dijkstra's algorithm
+    const [currentStep, setCurrentStep] = useState(0);
+    // State which stores the result of the Dijkstra's algorithm
+    const [dijkstraResult, setDijkstraResult] = useState({});
+
+    // Function to check if the graph is in edit mode
+    const graphEditingMode = () => {
+        return Object.keys(dijkstraResult).length === 0;
+    }
 
     // Updates the position of a node in the graph
     const updateNodePosition = (nodeId, x, y) => {
@@ -50,24 +59,28 @@ const DijkstrasAlgorithmCanvas = () => {
 
     // Handles the selection of an edge
     const handleSelectEdge = (edgeId) => {
-        if (selectedEdgeId === edgeId) {
-            setSelectedEdgeId(null);
-            setSelectedWeight(null);
-        } else {
-            setSelectedEdgeId(edgeId);
-            const edge = edges.find((e) => e.id === edgeId);
-            setSelectedWeight(edge.weight);
+        if (graphEditingMode()) {
+            if (selectedEdgeId === edgeId) {
+                setSelectedEdgeId(null);
+                setSelectedWeight(null);
+            } else {
+                setSelectedEdgeId(edgeId);
+                const edge = edges.find((e) => e.id === edgeId);
+                setSelectedWeight(edge.weight);
+            }
         }
     };
 
     // Handles the selection of a node in the graph
     const handleNodeClick = (nodeId, selected) => {
-        if (selected) {
-            setSelectedNodes((prevSelectedNodes) => [...prevSelectedNodes, nodeId]);
-        } else {
-            setSelectedNodes((prevSelectedNodes) =>
-                prevSelectedNodes.filter((id) => id !== nodeId)
-            );
+        if (graphEditingMode()) {
+            if (selected) {
+                setSelectedNodes((prevSelectedNodes) => [...prevSelectedNodes, nodeId]);
+            } else {
+                setSelectedNodes((prevSelectedNodes) =>
+                    prevSelectedNodes.filter((id) => id !== nodeId)
+                );
+            }
         }
     };
 
@@ -163,11 +176,12 @@ const DijkstrasAlgorithmCanvas = () => {
                             selected={selectedNodes.includes(node.id)}
                             x={node.x}
                             y={node.y}
+                            disableDragging={!graphEditingMode()}
                         />
                     ))}
                 </div>
             </div>
-            {Object.keys(dijkstraResult).length === 0 && (
+            {graphEditingMode() && (
                 <section>
                     <label className={'label'}>Graph Actions:</label>
                     <section className={'is-flex is-justify-content-space-between'}>
@@ -242,7 +256,6 @@ const DijkstrasAlgorithmCanvas = () => {
                             <button
                                 className={'button is-info'}
                                 onClick={() => {
-                                    console.log(nodes)
                                     if (nodes.length < 2) {
                                         errorToast('Please add at least two nodes');
                                         return;
@@ -269,6 +282,37 @@ const DijkstrasAlgorithmCanvas = () => {
                         </div>
                     </section>
                 </section>
+            )}
+            {!graphEditingMode() && (
+                <div>
+                    <h2 className={'title'}>Algorithm Steps</h2>
+                    <h3 className={'subtitle is-size-4 mt-3 mb-5'}>Step {currentStep + 1} of {dijkstraResult.length}</h3>
+                    <p className={'is-size-5 content is-inline-block'}>{dijkstraResult[currentStep].text}</p>
+                    <div className={'buttons is-grouped is-flex is-justify-content-space-between mt-5'}>
+                        <button
+                            className="button"
+                            onClick={() => setCurrentStep((prevStep) => Math.max(prevStep - 1, 0))}
+                            disabled={currentStep === 0}
+                        >
+                            <FontAwesomeIcon icon={faArrowLeft}/>
+                        </button>
+                        <button
+                            className="button"
+                            onClick={() => setCurrentStep((prevStep) => Math.min(prevStep + 1, dijkstraResult.length - 1))}
+                            disabled={currentStep === dijkstraResult.length - 1}
+                        >
+                            <FontAwesomeIcon icon={faArrowRight}/>
+                        </button>
+                    </div>
+                    <button
+                        className="button is-info"
+                        onClick={() => setDijkstraResult({})}
+                        disabled={currentStep === dijkstraResult.length - 1}
+                    >
+                        <FontAwesomeIcon icon={faRefresh}/>
+                        <p className={'ml-3'}>Restart</p>
+                    </button>
+                </div>
             )}
         </div>
     );
