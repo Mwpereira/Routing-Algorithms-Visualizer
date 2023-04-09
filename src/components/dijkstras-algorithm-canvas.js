@@ -287,7 +287,31 @@ const DijkstrasAlgorithmCanvas = () => {
                 <div>
                     <h2 className={'title'}>Algorithm Steps</h2>
                     <h3 className={'subtitle is-size-4 mt-3 mb-5'}>Step {currentStep + 1} of {dijkstraResult.length}</h3>
-                    <p className={'is-size-5 content is-inline-block'}>{dijkstraResult[currentStep].text}</p>
+                    <p className={'is-size-5 content is-inline-'}>{dijkstraResult[currentStep].text}</p>
+                    <section>
+                        <table className={'table'}>
+                            <thead>
+                            <tr>
+                                <th>Node</th>
+                                <th>Is Visited?</th>
+                                <th>Distance</th>
+                                <th>Previous Node</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {dijkstraResult[currentStep].table.map((_, index) => (
+                                index !== dijkstraResult[currentStep].table[0].length ? (
+                                    <tr key={index}>
+                                        <td>{dijkstraResult[currentStep].table[0][index]}</td>
+                                        <td>{dijkstraResult[currentStep].table[1][index] ? 'true' : 'false'}</td>
+                                        <td>{dijkstraResult[currentStep].table[2][index]}</td>
+                                        <td>{dijkstraResult[currentStep].table[3][index] ?? 'starting node'}</td>
+                                    </tr>
+                                ) : null
+                            ))}
+                            </tbody>
+                        </table>
+                    </section>
                     <div className={'buttons is-grouped is-flex is-justify-content-space-between mt-5'}>
                         <button
                             className="button"
@@ -307,7 +331,6 @@ const DijkstrasAlgorithmCanvas = () => {
                     <button
                         className="button is-info"
                         onClick={() => setDijkstraResult({})}
-                        disabled={currentStep === dijkstraResult.length - 1}
                     >
                         <FontAwesomeIcon icon={faRefresh}/>
                         <p className={'ml-3'}>Restart</p>
