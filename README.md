@@ -2,9 +2,17 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Required
+
+- [Node.js Version 18+](https://nodejs.org/en/download)
+
+## Install Dependencies
+
+### `npm install`
+
 ## Available Scripts
 
-In the project directory, you can run:
+### Run the app in the development mode (Recommended)
 
 ### `npm start`
 
@@ -13,6 +21,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+### Production build
 
 ### `npm run build`
 
