@@ -25,7 +25,6 @@ function distanceVector(graph, numberOfIterations) {
 
     for (const [startNode, [startNodeKey, startNodeValue]] of Object.entries(Object.entries(graph))) {
         for (const [endNode, [endNodeKey, endNodeValue]] of Object.entries(Object.entries(graph[startNodeKey]))) {
-            console.log()
             distanceVectors[startNode][Object.keys(graph).indexOf(endNodeKey)] = graph[startNodeKey][endNodeKey]
         }
     }
