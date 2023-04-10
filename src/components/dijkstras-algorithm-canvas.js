@@ -8,6 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {faRefresh} from "@fortawesome/free-solid-svg-icons/faRefresh";
 import {faPenToSquare} from "@fortawesome/free-solid-svg-icons/faPenToSquare";
+import SanitizeText from "../utilities/sanitize-text";
 
 const defaultNodeData = [
     {id: "A", x: 150, y: 100},
@@ -420,7 +421,7 @@ const DijkstrasAlgorithmCanvas = () => {
                     <div className={"RA-Container"}>
                         <h2 className={'title'}>Algorithm Steps</h2>
                         <h3 className={'subtitle is-size-4 mt-3 mb-5'}>Step {currentStep + 1} of {dijkstraResult.length}</h3>
-                        <p className={'is-size-5 content is-inline-'}>{dijkstraResult[currentStep].text}</p>
+                        <p className={'is-size-5 content is-inline-'}>{<SanitizeText text={dijkstraResult[currentStep].text} />}</p>
                         <section>
                             <table className={'table mb-3'}>
                                 <thead>

@@ -1,4 +1,4 @@
-# CPS 706 - Group 13 - Routing Algorithms
+# CPS 706 - Group 13
 
 # Project Info
 
