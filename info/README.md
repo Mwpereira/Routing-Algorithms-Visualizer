@@ -1,7 +1,8 @@
+# CPS 706 - Group 13 - Routing Algorithms
 
 # Project Info
 
-## Group Info 
+## Group Information 
 
 Michael Pereira - 500896409
 
@@ -17,9 +18,17 @@ Jared Amaro - 500949423
 
 ## Installation Instructions
 
+### Local Development
+
+Required: Node.js Version 18+
+
+Steps on how to run the project locally are located within the `README.md` file in the root of the project.
+
+### Cloud Deployment
+
 Site is located at <a href="https://routing-algorithms.netlify.app/">routing-algorithms.netlify.app/</a>
 
-## How to use Site
+## How to use Routing Algorithms website
 
 ### Graph Building User Interface
 
@@ -39,7 +48,7 @@ destination node of a graph. Dijkstra's algorithm computes this value with the c
 topology including link costs between all nodes. Dijkstra's algorithm takes an iterative approach to solving this 
 problem.
 
-### Algorithm
+### Algorithm Information
 
 1. Our implementation of this algorithm takes input of the graph in the form of an adjacency list representation.
 2. The graph auto-generates text based on the graph and procedure to describe what the algorithm is doing, how it is 
@@ -57,13 +66,13 @@ source node and a destination node of a graph. This is a distributed algorithm t
 own tables of the shortest distances. These routers communicate with each other from time to time and exchange these 
 tables and find better paths to reach other nodes.
 
-### Algorithm Info
+### Algorithm Information
 
 1. Our implementation of this algorithm takes input of the graph in the form of an adjacency list representation.
 2. The graph auto-generates text based on the graph and procedure to describe what the algorithm is doing, how it is
    doing it and why.
-3. Each router maintains a table of least cost paths to other nodes
-4. This algorithm is derived using the Bellman-Ford equation
+3. Each router maintains a table of the least cost paths to other nodes.
+4. This algorithm is derived using the Bellman-Ford equation.
 5. The number of iterations the algorithm performs to gain full knowledge of the network is equal to the number of 
 nodes the graph has (worst case).
 
