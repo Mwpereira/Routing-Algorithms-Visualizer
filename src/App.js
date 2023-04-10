@@ -26,7 +26,7 @@ function App() {
                 </Routes>
             </ScrollToTop>
             <ToastContainer
-                autoClose={3000}
+                autoClose={2500}
                 closeOnClick
                 draggable
                 hideProgressBar={false}

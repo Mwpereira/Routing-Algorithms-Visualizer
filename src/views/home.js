@@ -44,7 +44,7 @@ function Home() {
                             Cloud Deployment
                         </h4>
                         <p>
-                            Site is located at <a href="https://routing-algorithms.netlify.app/" target={'_blank'} rel={'noreferrer'}>routing-algorithms.netlify.app</a>
+                            Site is located at <a href="https://routing-algorithms.netlify.app/" rel={'noreferrer'} target={'_blank'}>routing-algorithms.netlify.app</a>
                         </p>
                         <h3 className={'has-text-weight-semibold is-size-4 mt-5  mb-3'}>
                             How to use Routing Algorithms website

@@ -71,15 +71,6 @@ const DistanceVectorAlgorithmCanvas = () => {
         }
     };
 
-    // Select Edge for Distance Vector Algorithm Instructions
-    const selectEdge = (edgeId) => {
-        const edge = edges.find((c) => c.id === edgeId || c.id === edgeId.split("").reverse().join(""))
-
-        if (edge && !(selectedEdgeIds.includes(edge.id))) {
-            setSelectedEdgeIds([...selectedEdgeIds, edge.id]);
-        }
-    };
-
     // Deselect Edge for Distance Vector Algorithm Instructions
     const deselectEdge = (edgeId) => {
         const edge = edges.find((c) => c.id === edgeId || c.id === edgeId.split("").reverse().join(""))
@@ -139,6 +130,9 @@ const DistanceVectorAlgorithmCanvas = () => {
                 setEdges((prevEdges) => [...prevEdges, newEdge]);
                 setSelectedNodes([]);
             }
+        } else {
+            dismissToast(1)
+            errorToast("Please select two nodes")
         }
     };
 
@@ -189,6 +183,21 @@ const DistanceVectorAlgorithmCanvas = () => {
             removeAllSelectedEdges();
         }
     }, [currentStep]);
+
+    // Removes a selected edge from the graph
+    const deleteEdge = () => {
+        if (selectedEdgeIds.length > 0) {
+            const edgeId = selectedEdgeIds[0];
+            // Remove edge from the edges list
+            setEdges((prevEdges) => prevEdges.filter((edge) => edge.id !== edgeId));
+
+            // Deselect the edge
+            deselectEdge(edgeId);
+        } else {
+            dismissToast(1);
+            errorToast("Please select an edge to delete.")
+        }
+    };
 
     return (
         <div className={'is-flex is-flex-direction-column columns mb-6 pb-6 '}>
@@ -256,11 +265,22 @@ const DistanceVectorAlgorithmCanvas = () => {
                                 <button
                                     className={'button'}
                                     onClick={() => {
-                                        selectedNodes.forEach((nodeId) => removeNode(nodeId));
-                                        setSelectedNodes([]);
+                                        if (selectedNodes.length > 0) {
+                                            selectedNodes.forEach((nodeId) => removeNode(nodeId));
+                                            setSelectedNodes([]);
+                                        } else {
+                                            dismissToast(1)
+                                            errorToast("Please select a node to remove");
+                                        }
                                     }}
                                 >
                                     Delete Node
+                                </button>
+                                <button
+                                    className={'button'}
+                                    onClick={() => deleteEdge()}
+                                >
+                                    Delete Edge
                                 </button>
                             </div>
                         </section>

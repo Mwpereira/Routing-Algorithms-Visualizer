@@ -147,6 +147,9 @@ const DijkstrasAlgorithmCanvas = () => {
                 setEdges((prevEdges) => [...prevEdges, newEdge]);
                 setSelectedNodes([]);
             }
+        } else {
+            dismissToast(1)
+            errorToast("Please select two nodes")
         }
     };
 
@@ -207,10 +210,9 @@ const DijkstrasAlgorithmCanvas = () => {
             setDeltaValues(newDeltaValues);
         } else {
             if (nodeSteps.length !== nodes.length) {
-                console.log(deltaValues.length === 0)
                 if (deltaValues.length === 0) {
                     for (let i = 0; i < newDeltaValues.length; i++) {
-                        if (newDeltaValues[i]  === true) {
+                        if (newDeltaValues[i] === true) {
                             const letter = table[0][i]
                             setSelectedNodes([letter]);
                             currentSteps.push(letter);
@@ -231,6 +233,21 @@ const DijkstrasAlgorithmCanvas = () => {
             }
         }
     }
+
+    // Removes a selected edge from the graph
+    const deleteEdge = () => {
+        if (selectedEdgeIds.length > 0) {
+            const edgeId = selectedEdgeIds[0];
+            // Remove edge from the edges list
+            setEdges((prevEdges) => prevEdges.filter((edge) => edge.id !== edgeId));
+
+            // Deselect the edge
+            deselectEdge(edgeId);
+        } else {
+            dismissToast(1);
+            errorToast("Please select an edge to delete.")
+        }
+    };
 
     return (
         <div className={'is-flex is-flex-direction-column columns mb-6 pb-6 '}>
@@ -298,11 +315,22 @@ const DijkstrasAlgorithmCanvas = () => {
                                 <button
                                     className={'button'}
                                     onClick={() => {
-                                        selectedNodes.forEach((nodeId) => removeNode(nodeId));
-                                        setSelectedNodes([]);
+                                        if (selectedNodes.length > 0) {
+                                            selectedNodes.forEach((nodeId) => removeNode(nodeId));
+                                            setSelectedNodes([]);
+                                        } else {
+                                            dismissToast(1)
+                                            errorToast("Please select a node to remove");
+                                        }
                                     }}
                                 >
                                     Delete Node
+                                </button>
+                                <button
+                                    className={'button'}
+                                    onClick={() => deleteEdge()}
+                                >
+                                    Delete Edge
                                 </button>
                             </div>
                         </section>
@@ -422,9 +450,12 @@ const DijkstrasAlgorithmCanvas = () => {
                                 </tbody>
                             </table>
                             <p className={'is-size-7 mb-5'}><span
-                                className={'has-text-weight-semibold'}>Legend:</span><br/> Infinity (Distance) = Unreachable at the moment from the starting node, none
+                                className={'has-text-weight-semibold'}>Legend:</span><br/> Infinity (Distance) =
+                                Unreachable at the moment from the starting node, none
                                 (Previous Node) = Either not computed yet or is the starting node</p>
-                            <caption className={'has-text-left label pt-1'}>Final Least Cost Paths to Destination Nodes</caption>
+                            <caption className={'has-text-left label pt-1'}>Final Least Cost Paths to Destination
+                                Nodes
+                            </caption>
                             <table className={'table'}>
                                 <thead>
                                 <tr>
