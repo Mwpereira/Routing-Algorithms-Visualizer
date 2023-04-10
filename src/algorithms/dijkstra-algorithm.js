@@ -137,5 +137,5 @@ function dijkstra(graph, startNode) {
     let path = dijkstra_path_calculator(startNode, graph, prev);
     console.table(path);
 
-    return distances, prev, steps, path;
+    return {distances, prev, steps, path};
 }
