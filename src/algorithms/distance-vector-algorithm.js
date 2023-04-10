@@ -32,18 +32,18 @@ function distanceVector(graph, numberOfIterations) {
 
     let text = `We have initialized the tables for all the ${numNodes} routers. This initial step is where the ` +
         `routers have not communicated with each other yet (t=0).`;
-    let tempArr0 = JSON.parse(JSON.stringify(distanceVectors));
-    console.table(tempArr0)
-    steps.push({distanceVectors: tempArr0, text})
+
+    let updatedVectors = JSON.parse(JSON.stringify(distanceVectors));
+    steps.push({distanceVectors: updatedVectors, text})
+
     // Run the distance-vector algorithm for numIterations iterations
-    for (let iteration = 1; iteration <= numNodes; iteration++) {
+    for (let iteration = 1; iteration <= numberOfIterations; iteration++) {
         // Update the distance vector for each node in the network
         const updatedDistanceVector= updateDistanceVector(numNodes, distanceVectors, graph, iteration);
         distanceVectors = updatedDistanceVector.distanceVectors;
-        let tempArr = JSON.parse(JSON.stringify(distanceVectors));
+        let updatedVectorsDupe = JSON.parse(JSON.stringify(distanceVectors));
         text = updatedDistanceVector.text;
-        console.table(tempArr)
-        steps.push({distanceVectors: tempArr, text})
+        steps.push({distanceVectors: updatedVectorsDupe, text})
     }
 
     return {distanceVectors, steps};
