@@ -13,28 +13,6 @@ import {distanceVectorAlgorithm} from "./algorithms/distance-vector-algorithm";
 import {dijkstra} from "./algorithms/dijkstra-algorithm";
 
 function App() {
-    // Example usage
-
-    const graph1 = {
-        A: { B: 5, C: 1 },
-        B: { A: 5, C: 2, D: 1 },
-        C: { A: 1, B: 2, D: 4 },
-        D: { B: 1, C: 4 },
-    };
-
-
-    const graph = {
-        X: { Y: 1, Z: 5 },
-        Y: { X: 1, Z: 2 },
-        Z: { X: 5, Y: 2 }
-    };
-
-    console.log("STARTED");
-    console.table(distanceVectorAlgorithm(graph))
-    console.log("ENDED")
-
-    //dijkstra(graph1, "A")
-
     return (
         <BrowserRouter>
             <ScrollToTop>
