@@ -25,3 +25,15 @@
   color: black;
   font-weight: bold;
 }
+
+.left-arrow {
+  position: fixed;
+  top: 375px;
+  left: 200px;
+}
+
+.right-arrow {
+  position: fixed;
+  top: 375px;
+  right: 200px;
+}
