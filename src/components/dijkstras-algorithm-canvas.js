@@ -39,6 +39,8 @@ const DijkstrasAlgorithmCanvas = () => {
     const [currentStep, setCurrentStep] = useState(0);
     // State which stores the result of the Dijkstra's algorithm
     const [dijkstraResult, setDijkstraResult] = useState({});
+    const [deltaValues, setDeltaValues] = useState([]);
+    const [nodeSteps, setNodeSteps] = useState([]);
 
     // Function to check if the graph is in edit mode
     const graphEditingMode = () => {
@@ -146,6 +148,7 @@ const DijkstrasAlgorithmCanvas = () => {
         }
     };
 
+    // Removes a selected node from the graph
     const removeNode = (nodeId) => {
         // Remove node from nodes list
         setNodes((prevNodes) => prevNodes.filter((node) => node.id !== nodeId));
@@ -164,6 +167,7 @@ const DijkstrasAlgorithmCanvas = () => {
         );
     };
 
+    // Removes a selected edge from the graph when the current step changes
     useEffect(() => {
         if (!graphEditingMode() && edges.length > 0) {
             edges.map((edge) => {
@@ -174,21 +178,58 @@ const DijkstrasAlgorithmCanvas = () => {
         }
     }, [currentStep]);
 
+    // Removes all selected edges from the graph
     const removeAllSelectedEdges = () => {
         if (edges.length > 0) {
-        edges.map((edge) => {
-            if (edge.id) {
-                deselectEdge(edge.id);
-            }
-        })
-    }
+            edges.map((edge) => {
+                if (edge.id) {
+                    deselectEdge(edge.id);
+                }
+            })
+        }
     }
 
+    // Removes all selected edges from the graph when the current step changes
     useEffect(() => {
         if (!graphEditingMode()) {
-          removeAllSelectedEdges();
+            removeAllSelectedEdges();
         }
     }, [currentStep]);
+
+    const generateDeltaValues = (table, action) => {
+        const newDeltaValues = table[1];
+        const currentSteps = nodeSteps;
+
+        if (action === 'backward') {
+            setSelectedNodes([nodeSteps[currentStep - 1]]);
+            setDeltaValues(newDeltaValues);
+        } else {
+            if (nodeSteps.length !== nodes.length) {
+                console.log(deltaValues.length === 0)
+                if (deltaValues.length === 0) {
+                    for (let i = 0; i < newDeltaValues.length; i++) {
+                        if (newDeltaValues[i]  === true) {
+                            const letter = table[0][i]
+                            console.log(letter)
+                            setSelectedNodes([letter]);
+                            currentSteps.push(letter);
+                            setNodeSteps(currentSteps)
+                            break;
+                        }
+                    }
+                } else {
+                    const intersection = deltaValues.findIndex((element, index) => element !== newDeltaValues[index]); // Only one value should be different between the two arrays
+                    const letter = table[0][intersection] // Thus we choose the first index/letter in the array
+                    setSelectedNodes([letter]);
+                    currentSteps.push(letter);
+                    setNodeSteps(currentSteps)
+                }
+                setDeltaValues(newDeltaValues);
+            } else {
+                setSelectedNodes([nodeSteps[currentStep + 1]])
+            }
+        }
+    }
 
     return (
         <div className={'is-flex is-flex-direction-column columns mb-6 pb-6 '}>
@@ -330,6 +371,7 @@ const DijkstrasAlgorithmCanvas = () => {
 
                                         setSelectedNodes([]); // Unselect all nodes
                                         setDijkstraResult(result); // Set the result
+                                        generateDeltaValues(result[0].table, 'forward'); // Generate the delta values
 
                                         dismissToast(2) // Remove the toast with the Assigned ID of 2 which is that of the infoToast
 
@@ -375,19 +417,28 @@ const DijkstrasAlgorithmCanvas = () => {
                                 })}
                                 </tbody>
                             </table>
+                            <p className={'is-size-7'}><span
+                                className={'has-text-weight-semibold'}>Legend:</span><br/> Infinity (Distance) = Unreachable at the moment from the starting node, none
+                                (Previous Node) = Either not computed yet or is the starting node</p>
                         </section>
                         <div className={'buttons is-grouped is-flex is-justify-content-space-between mt-5 pt-2'}>
                             <button
                                 className="button"
                                 disabled={currentStep === 0}
-                                onClick={() => setCurrentStep((prevStep) => Math.max(prevStep - 1, 0))}
+                                onClick={(() => {
+                                    setCurrentStep((prevStep) => Math.max(prevStep - 1, 0))
+                                    generateDeltaValues(dijkstraResult[currentStep - 1].table, 'backward');
+                                })}
                             >
                                 <FontAwesomeIcon icon={faArrowLeft}/>
                             </button>
                             <button
                                 className="button"
                                 disabled={currentStep === dijkstraResult.length - 1}
-                                onClick={() => setCurrentStep((prevStep) => Math.min(prevStep + 1, dijkstraResult.length - 1))}
+                                onClick={(() => {
+                                    setCurrentStep((prevStep) => Math.min(prevStep + 1, dijkstraResult.length - 1))
+                                    generateDeltaValues(dijkstraResult[currentStep + 1].table, 'forward');
+                                })}
                             >
                                 <FontAwesomeIcon icon={faArrowRight}/>
                             </button>
@@ -398,6 +449,13 @@ const DijkstrasAlgorithmCanvas = () => {
                                 onClick={() => {
                                     removeAllSelectedEdges();
                                     setDijkstraResult({})
+                                    setCurrentStep(0)
+                                    setSelectedEdgeIds([])
+                                    setSelectedNodes([])
+                                    setEdges(defaultEdgeData)
+                                    setNodes(defaultNodeData)
+                                    setNodeSteps([])
+                                    setDeltaValues([])
                                 }}
                             >
                                 <FontAwesomeIcon icon={faPenToSquare}/>
@@ -410,8 +468,11 @@ const DijkstrasAlgorithmCanvas = () => {
                                     setDijkstraResult({})
                                     setCurrentStep(0)
                                     setSelectedEdgeIds([])
+                                    setSelectedNodes([])
                                     setEdges(defaultEdgeData)
                                     setNodes(defaultNodeData)
+                                    setNodeSteps([])
+                                    setDeltaValues([])
                                 }}
                             >
                                 <FontAwesomeIcon icon={faRefresh}/>

@@ -106,9 +106,6 @@ function dijkstra(graph, startNode) {
         }
 
         steps.push({table, text})
-
-        console.table(table)
-        console.log(text)
     }
 
     return distances, prev, steps;
