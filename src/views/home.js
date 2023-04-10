@@ -44,7 +44,8 @@ function Home() {
                             Cloud Deployment
                         </h4>
                         <p>
-                            Site is located at <a href="https://routing-algorithms.netlify.app/" rel={'noreferrer'} target={'_blank'}>routing-algorithms.netlify.app</a>
+                            Site is located at <a href="https://routing-algorithms.netlify.app/" rel={'noreferrer'}
+                                                  target={'_blank'}>routing-algorithms.netlify.app</a>
                         </p>
                         <h3 className={'has-text-weight-semibold is-size-4 mt-5  mb-3'}>
                             How to use Routing Algorithms website
@@ -56,40 +57,40 @@ function Home() {
                             {`To add nodes to the graph, use the button "Add Node" to the graph. You can drag around this node to make it look
                             better to your liking.`}
 
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
 
-                            {`To connect two nodes together, click on "Connect Nodes" then click on the two nodes you would like to connect. After
-                            this, once again click on "Connect Nodes" and it will create and draw this edge with a weight of '1'.`}
+                            {`To connect two nodes together,  click on the two nodes you would like to connect and then click on "Connect Nodes". After 
+this, once again click on "Connect Nodes" and it will create and draw this edge with a weight of '1'.`}
 
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
 
                             {`To change the weight of an edge, click on the edge and a text-box will pop up below the graph. Then change the value
                             in the text-box and click the "Update Weight" button.`}
 
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
 
                             {`To delete a node, click on the node you wish to delete and click the "Delete Node" button.`}
 
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
 
                             {`To choose a starting node or the number of iterations, choose from either of their dropdown lists (depending on the algorithm).`}
 
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
 
                             {`To calculate a graph, click on the "Calculate" button. This will use the selected algorithm and will display step-by-step instructions on how the algorithm works.`}
 
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
 
                             {`To edit an existing graph that has been calculated, click on the "Edit" button.`}
 
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
 
                             {`To clear the graph, click on the "Rest" button.`}
                         </p>
@@ -102,8 +103,10 @@ function Home() {
                         <p className={'ml-5'}>
                             <ol>
                                 <li>{`Our implementation of this algorithm takes input of the graph in the form of an adjacency list representation.`}</li>
-                                <li>The graph auto-generates text based on the graph and procedure to describe what the algorithm is doing, how it is
-                                    doing it and why.</li>
+                                <li>The graph auto-generates text based on the graph and procedure to describe what the
+                                    algorithm is doing, how it is
+                                    doing it and why.
+                                </li>
                                 <li>{`Dijkstra's algorithm maintains a table which maintains information about the algorithm's work on the graph.`}</li>
                             </ol>
                         </p>
@@ -118,13 +121,19 @@ function Home() {
                         </h4>
                         <p className={'ml-5'}>
                             <ol>
-                                <li>Our implementation of this algorithm takes input of the graph in the form of an adjacency list representation.</li>
-                                <li>The graph auto-generates text based on the graph and procedure to describe what the algorithm is doing, how it is
-                                    doing it and why.</li>
+                                <li>Our implementation of this algorithm takes input of the graph in the form of an
+                                    adjacency list representation.
+                                </li>
+                                <li>The graph auto-generates text based on the graph and procedure to describe what the
+                                    algorithm is doing, how it is
+                                    doing it and why.
+                                </li>
                                 <li>Each router maintains a table of the least cost paths to other nodes.</li>
                                 <li>This algorithm is derived using the Bellman-Ford equation.</li>
-                                <li>The number of iterations the algorithm performs to gain full knowledge of the network is equal to the number of
-                                    nodes the graph has (worst case).</li>
+                                <li>The number of iterations the algorithm performs to gain full knowledge of the
+                                    network is equal to the number of
+                                    nodes the graph has (worst case).
+                                </li>
                             </ol>
                         </p>
                         <h4 className={'has-text-weight-semibold mt-5 mb-3'}>
