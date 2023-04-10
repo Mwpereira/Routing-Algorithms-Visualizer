@@ -13,7 +13,7 @@ function Home() {
             <section className="columns mb-6">
                 <div className="container column is-12">
                     <div className="is-flex is-flex-direction-column is-size-5">
-                        <h2 className={'title'}>CPS 706 - Group 13 - Routing Algorithms</h2>
+                        <h2 className={'title'} style={{fontSize: '30px'}}>CPS 706 - Group 13 - Routing Algorithms</h2>
                         <h3 className={'is-size-4 mb-3 has-text-weight-semibold'}>Group Information:</h3>
                         <p>
                             <ul>
