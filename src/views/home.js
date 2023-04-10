@@ -52,7 +52,7 @@ function Home() {
                         <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
                             Graph Building User Interface
                         </h4>
-                        <p>
+                        <p className={'mb-5'}>
                             {`To add nodes to the graph, use the button "Add Node" to the graph. You can drag around this node to make it look
                             better to your liking.`}
 
@@ -68,6 +68,30 @@ function Home() {
                             {`To change the weight of an edge, click on the edge and a text-box will pop up below the graph. Then change the value
                             in the text-box and click the "Update Weight" button.`}
 
+                            <br />
+                            <br />
+
+                            {`To delete a node, click on the node you wish to delete and click the "Delete Node" button.`}
+
+                            <br />
+                            <br />
+
+                            {`To choose a starting node or the number of iterations, choose from either of their dropdown lists (depending on the algorithm).`}
+
+                            <br />
+                            <br />
+
+                            {`To calculate a graph, click on the "Calculate" button. This will use the selected algorithm and will display step-by-step instructions on how the algorithm works.`}
+
+                            <br />
+                            <br />
+
+                            {`To edit an existing graph that has been calculated, click on the "Edit" button.`}
+
+                            <br />
+                            <br />
+
+                            {`To clear the graph, click on the "Rest" button.`}
                         </p>
                         <h3 className={'has-text-weight-semibold is-size-4 mt-5  mb-3'}>
                             {`Dijkstra's Link-State Routing Algorithm`}

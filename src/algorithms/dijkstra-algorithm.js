@@ -1,6 +1,7 @@
 // This file contains the implementation of the Dijkstra's algorithm
 import {convertCanvasGraphOutput} from "../utilities/canvas-converter";
 
+// Update the distance vector for each node in the network
 export const dijkstraAlgorithm = (graph, startNode) => {
     const convertedGraph = convertCanvasGraphOutput(graph);
     return dijkstra(convertedGraph, startNode);

@@ -1,10 +1,12 @@
 import {convertCanvasGraphOutput} from "../utilities/canvas-converter";
 
+// Update the distance vector for each node in the network
 export const distanceVectorAlgorithm = (graph, numberOfIterations) => {
     const convertedGraph = convertCanvasGraphOutput(graph);
     return distanceVector(convertedGraph, numberOfIterations);
 }
 
+// Distance Vector Algorithm
 function distanceVector(graph, numberOfIterations) {
     let steps = [];
 
@@ -49,6 +51,7 @@ function distanceVector(graph, numberOfIterations) {
     return {distanceVectors, steps};
 }
 
+// Update the distance vector for each node in the network
 function updateDistanceVector(numNodes, distanceVectors, graph, iter) {
     let text = ``;
     let index_to_key_mapping = Object.keys(graph)

@@ -41,6 +41,18 @@ this, once again click on "Connect Nodes" and it will create and draw this edge 
 To change the weight of an edge, click on the edge and a text-box will pop up below the graph. Then change the value 
 in the text-box and click the "Update Weight" button.
 
+To delete a node, click on the node you wish to delete and click the "Delete Node" button.
+
+To delete an edge, click on the edge you wish to delete and click the "Delete Edge" button.
+
+To choose a starting node or the number of iterations, choose from either of their dropdown lists (depending on the algorithm).
+
+To calculate a graph, click on the "Calculate" button. This will use the selected algorithm and will display step-by-step instructions on how the algorithm works.
+
+To edit an existing graph that has been calculated, click on the "Edit" button.
+
+To clear the graph, click on the "Rest" button.
+
 ## Dijkstra's Link-State Routing Algorithm
 
 Dijkstra's algorithm is a centralized routing algorithm that computes the least-cost path between a source node and a 
