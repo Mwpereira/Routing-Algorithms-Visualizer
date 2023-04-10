@@ -35,7 +35,7 @@ Site is located at <a href="https://routing-algorithms.netlify.app/">routing-alg
 To add nodes to the graph, use the button "Add Node" to the graph. You can drag around this node to make it look 
 better to your liking.
 
-To connect two nodes together, click on "Connect Nodes" then click on the two nodes you would like to connect. After 
+To connect two nodes together,  click on the two nodes you would like to connect and then click on "Connect Nodes". After 
 this, once again click on "Connect Nodes" and it will create and draw this edge with a weight of '1'. 
 
 To change the weight of an edge, click on the edge and a text-box will pop up below the graph. Then change the value 
