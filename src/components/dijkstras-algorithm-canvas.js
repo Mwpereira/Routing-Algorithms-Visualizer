@@ -476,7 +476,7 @@ const DijkstrasAlgorithmCanvas = () => {
                                 </tbody>
                             </table>
                         </section>
-                        <div className={'buttons is-grouped is-flex is-justify-content-space-between mt-5 pt-2'}>
+                        <div className={'buttons is-grouped is-flex is-justify-content-space-between mt-5'}>
                             <button
                                 className="button left-arrow"
                                 disabled={currentStep === 0}

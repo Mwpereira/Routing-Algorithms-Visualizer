@@ -37,3 +37,17 @@
   top: 23.438rem;
   right: 12.5rem;
 }
+
+@media (max-width: 1348px) {
+  .left-arrow {
+    position: fixed;
+    top: 20rem;
+    left: 10rem;
+  }
+
+  .right-arrow {
+    position: fixed;
+    top: 20rem;
+    right: 10rem;
+  }
+}

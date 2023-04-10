@@ -389,9 +389,9 @@ const DistanceVectorAlgorithmCanvas = () => {
                                 </tbody>
                             </table>
                         </section>
-                        <div className={'buttons is-grouped is-flex is-justify-content-space-between mt-5 pt-2'}>
+                        <div className={'buttons is-grouped is-flex is-justify-content-space-between mt-5'}>
                             <button
-                                className="button"
+                                className="button left-arrow"
                                 disabled={currentStep === 0}
                                 onClick={(() => {
                                     setCurrentStep((prevStep) => Math.max(prevStep - 1, 0))
@@ -400,7 +400,7 @@ const DistanceVectorAlgorithmCanvas = () => {
                                 <FontAwesomeIcon icon={faArrowLeft}/>
                             </button>
                             <button
-                                className="button"
+                                className="button right-arrow"
                                 disabled={currentStep === distanceVectorResult.length - 1}
                                 onClick={(() => {
                                     setCurrentStep((prevStep) => Math.min(prevStep + 1, distanceVectorResult.length - 1))
