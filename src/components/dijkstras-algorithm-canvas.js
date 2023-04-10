@@ -7,6 +7,7 @@ import {dijkstraAlgorithm} from "../algorithms/dijkstra-algorithm";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {faRefresh} from "@fortawesome/free-solid-svg-icons/faRefresh";
+import {faPenToSquare} from "@fortawesome/free-solid-svg-icons/faPenToSquare";
 
 const defaultNodeData = [
     {id: "A", x: 150, y: 100},
@@ -173,13 +174,19 @@ const DijkstrasAlgorithmCanvas = () => {
         }
     }, [currentStep]);
 
+    const removeAllSelectedEdges = () => {
+        if (edges.length > 0) {
+        edges.map((edge) => {
+            if (edge.id) {
+                deselectEdge(edge.id);
+            }
+        })
+    }
+    }
+
     useEffect(() => {
-        if (!graphEditingMode() && edges.length > 0) {
-            edges.map((edge) => {
-                if (edge.id) {
-                    deselectEdge(edge.id);
-                }
-            })
+        if (!graphEditingMode()) {
+          removeAllSelectedEdges();
         }
     }, [currentStep]);
 
@@ -385,20 +392,32 @@ const DijkstrasAlgorithmCanvas = () => {
                                 <FontAwesomeIcon icon={faArrowRight}/>
                             </button>
                         </div>
-                        <button
-                            className="button is-info mt-5"
-                            onClick={() => {
-                                infoToast('Resetting Graph...')
-                                setDijkstraResult({})
-                                setCurrentStep(0)
-                                setSelectedEdgeIds([])
-                                setEdges(defaultEdgeData)
-                                setNodes(defaultNodeData)
-                            }}
-                        >
-                            <FontAwesomeIcon icon={faRefresh}/>
-                            <p className={'ml-3'}>Reset</p>
-                        </button>
+                        <div className={'buttons is-grouped'}>
+                            <button
+                                className="button is-warning mt-5"
+                                onClick={() => {
+                                    removeAllSelectedEdges();
+                                    setDijkstraResult({})
+                                }}
+                            >
+                                <FontAwesomeIcon icon={faPenToSquare}/>
+                                <p className={'ml-3'}>Edit</p>
+                            </button>
+                            <button
+                                className="button is-info mt-5"
+                                onClick={() => {
+                                    infoToast('Resetting Graph...')
+                                    setDijkstraResult({})
+                                    setCurrentStep(0)
+                                    setSelectedEdgeIds([])
+                                    setEdges(defaultEdgeData)
+                                    setNodes(defaultNodeData)
+                                }}
+                            >
+                                <FontAwesomeIcon icon={faRefresh}/>
+                                <p className={'ml-3'}>Reset</p>
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>
