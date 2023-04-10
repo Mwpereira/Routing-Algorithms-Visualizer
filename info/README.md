@@ -69,7 +69,25 @@ doing it and why.
 
 ### Algorithm Understanding
 
+1. We initialize the table which stores whether we have visited a node already or not, the shortest distance to the 
+nodes and the root/previous node that a node is connected to(dijkstra's algorithm forms a tree at the end).
+2. After this, we loop over all the nodes in the graph till we have visited all the nodes. We choose which node to 
+visit next by taking the shortest/closet node that we have not visited yet.
+3. We take the node we are currently evaluating and loop over all its neighbours to check whether or not the distances
+to them are shorter than through the current node or through the values we already have in the table.
+```javascript
+// calculate the distance to the neighbor node from the currentNode
+let distance = distances[currentNode] + graph[currentNode][neighbor];
 
+// if distance is less than the current known distance in the table then update the distance
+if (distance < distances[neighbor]) {
+   distances[neighbor] = distance;
+   prev[neighbor] = currentNode;
+}
+```
+4. From this we construct the minimum spanning tree so that we can find the shortest distance to all the other 
+nodes in the graph (using the previous node that each node is connected to). We trace this tree back until we reach 
+the starting node to find the shortest path between the starting node and destination node.
 
 ## Distance Vector Routing Algorithm
 
@@ -89,3 +107,5 @@ tables and find better paths to reach other nodes.
 nodes the graph has (worst case).
 
 ### Algorithm Understanding
+
+
