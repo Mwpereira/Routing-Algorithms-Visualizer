@@ -70,11 +70,12 @@ doing it and why.
 ### Algorithm Understanding
 
 1. We initialize the table which stores whether we have visited a node already or not, the shortest distance to the 
-nodes and the root/previous node that a node is connected to(dijkstra's algorithm forms a tree at the end).
+nodes and the root/previous node that a node is connected to (dijkstra's algorithm forms a tree at the end).
 2. After this, we loop over all the nodes in the graph till we have visited all the nodes. We choose which node to 
 visit next by taking the shortest/closet node that we have not visited yet.
-3. We take the node we are currently evaluating and loop over all its neighbours to check whether or not the distances
+3. We take the node we are currently evaluating and loop over all its neighbours to check whether the distances
 to them are shorter than through the current node or through the values we already have in the table.
+
 ```javascript
 // calculate the distance to the neighbor node from the currentNode
 let distance = distances[currentNode] + graph[currentNode][neighbor];

@@ -98,9 +98,9 @@ this, once again click on "Connect Nodes" and it will create and draw this edge 
                             {`Dijkstra's Link-State Routing Algorithm`}
                         </h3>
                         <p>
-                            {`Dijkstra's algorithm is a centralized routing algorithm that computes the least-cost path between a source node and a
-                            destination node of a graph. Dijkstra's algorithm computes this value with the complete knowledge about the network
-                            topology including link costs between all nodes. Dijkstra's algorithm takes an iterative approach to solving this
+                            {`Dijkstra's algorithm is a centralized routing algorithm that computes the least-cost path between a source node and a 
+                            destination node of a graph. This algorithm computes this value with the complete knowledge about the network 
+                            topology including link costs between all nodes. Furthermore, it takes an iterative approach to solving this 
                             problem.`}
                         </p>
                         <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
@@ -119,18 +119,44 @@ this, once again click on "Connect Nodes" and it will create and draw this edge 
                         <h4 className={'has-text-weight-semibold mt-5 mb-3'}>
                             Algorithm Understanding
                         </h4>
+                        <p className={'ml-5'}>
+                            <ol>
+                                <li>{`We initialize the table which stores whether we have visited a node already or not, the shortest distance to the 
+                                nodes and the root/previous node that a node is connected to (dijkstra's algorithm forms a tree at the end).`}</li>
+                                <li>{`After this, we loop over all the nodes in the graph till we have visited all the nodes. We choose which node to 
+                                visit next by taking the shortest/closet node that we have not visited yet.`}
+                                </li>
+                                <li>{`We take the node we are currently evaluating and loop over all its neighbours to check whether the distances
+                                to them are shorter than through the current node or through the values we already have in the table.`}</li>
+                                <li>{`From this we construct the minimum spanning tree so that we can find the shortest distance to all the other 
+                                nodes in the graph (using the previous node that each node is connected to). We trace this tree back until we reach 
+                                the starting node to find the shortest path between the starting node and destination node.`}</li>
+                            </ol>
+                        </p>
                         <h3 className={'has-text-weight-semibold is-size-4 mt-5  mb-3'}>
                             {`Distance Vector Routing Algorithm`}
                         </h3>
                         <p>
-                            {`Dijkstra's algorithm is a centralized routing algorithm that computes the least-cost path between a source node and a 
-                            destination node of a graph. This algorithm computes this value with the complete knowledge about the network 
-                            topology including link costs between all nodes. Furthermore, it takes an iterative approach to solving this 
-                            problem.`}
+                            {`The Distance Vector routing algorithm is a decentralized routing algorithm that computes the least-cost path between a 
+                            source node and a destination node of a graph. This is a distributed algorithm that where the routers maintain their 
+                            own tables of the shortest distances. These routers communicate with each other from time to time and exchange these 
+                            tables and find better paths to reach other nodes.`}
                         </p>
                         <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
                             Algorithm Information
                         </h4>
+                        <p className={'ml-5'}>
+                            <ol>
+                                <li>{`We initialize the table which stores whether we have visited a node already or not, the shortest distance to the
+                                    nodes and the root/previous node that a node is connected to(dijkstra's algorithm forms a tree at the end).`}
+                                </li>
+                                <li>{`After this, we loop over all the nodes in the graph till we have visited all the nodes. We choose which node to
+                                    visit next by taking the shortest/closet node that we have not visited yet.`}
+                                </li>
+                                <li>{`We take the node we are currently evaluating and loop over all its neighbours to check whether the distances
+                                    to them are shorter than through the current node or through the values we already have in the table.`}</li>
+                            </ol>
+                        </p>
                         <p className={'ml-5'}>
                             <ol>
                                 <li>Our implementation of this algorithm takes input of the graph in the form of an
