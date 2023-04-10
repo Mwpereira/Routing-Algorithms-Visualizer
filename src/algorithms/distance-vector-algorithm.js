@@ -33,6 +33,7 @@ function distanceVector(graph) {
     let text = `We have initialized the tables for all the ${numNodes} routers. This initial step is where the ` +
         `routers have not communicated with each other yet (t=0).`;
     let tempArr0 = JSON.parse(JSON.stringify(distanceVectors));
+    console.table(tempArr0)
     steps.push({distanceVectors: tempArr0, text})
     // Run the distance-vector algorithm for numIterations iterations
     for (let iteration = 1; iteration <= numNodes; iteration++) {
@@ -41,6 +42,7 @@ function distanceVector(graph) {
         distanceVectors = updatedDistanceVector.distanceVectors;
         let tempArr = JSON.parse(JSON.stringify(distanceVectors));
         text = updatedDistanceVector.text;
+        console.table(tempArr)
         steps.push({distanceVectors: tempArr, text})
     }
 
@@ -50,6 +52,16 @@ function distanceVector(graph) {
 function updateDistanceVector(numNodes, distanceVectors, graph) {
     let text = ``;
     let index_to_key_mapping = Object.keys(graph)
+
+    let main_distanceVector = JSON.parse(JSON.stringify(distanceVectors));;
+
+    for (let i = 0; i < main_distanceVector.length; i++) {
+        for (let j = 0; j < main_distanceVector[i].length; j++) {
+            if (main_distanceVector[i][j] === null) {
+                main_distanceVector[i][j] = Infinity;
+            }
+        }
+    }
 
     for (let node = 0; node < numNodes; node++) {
         for (let neighborNode = 0; neighborNode < numNodes; neighborNode++) {
@@ -61,13 +73,13 @@ function updateDistanceVector(numNodes, distanceVectors, graph) {
                     continue
                 }
 
-                if (distanceVectors[node][neighborNode] + distanceVectors[neighborNode][i] < distanceVectors[node][i]) {
+                if (main_distanceVector[node][neighborNode] + main_distanceVector[neighborNode][i] < main_distanceVector[node][i]) {
                     text += `We found that through router ${index_to_key_mapping[node]} to ` +
                         `${index_to_key_mapping[neighborNode]} we can go to ${index_to_key_mapping[i]} faster. ` +
                         `The distance compared is (` +
-                        `${distanceVectors[node][neighborNode] + distanceVectors[neighborNode][i]} < ${distanceVectors[node][i]}).\n\n`;
+                        `${main_distanceVector[node][neighborNode] + main_distanceVector[neighborNode][i]} < ${main_distanceVector[node][i]}).\n\n`;
 
-                    distanceVectors[node][i] = distanceVectors[node][neighborNode] + distanceVectors[neighborNode][i];
+                    distanceVectors[node][i] = main_distanceVector[node][neighborNode] + main_distanceVector[neighborNode][i];
                 }
             }
         }
