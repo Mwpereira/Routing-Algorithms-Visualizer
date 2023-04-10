@@ -56,8 +56,8 @@ To clear the graph, click on the "Rest" button.
 ## Dijkstra's Link-State Routing Algorithm
 
 Dijkstra's algorithm is a centralized routing algorithm that computes the least-cost path between a source node and a 
-destination node of a graph. Dijkstra's algorithm computes this value with the complete knowledge about the network 
-topology including link costs between all nodes. Dijkstra's algorithm takes an iterative approach to solving this 
+destination node of a graph. This algorithm computes this value with the complete knowledge about the network 
+topology including link costs between all nodes. Furthermore, it takes an iterative approach to solving this 
 problem.
 
 ### Algorithm Information

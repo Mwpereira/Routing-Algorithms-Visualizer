@@ -9,7 +9,7 @@ function Home() {
 
     return (
         <>
-            <h1 className={'title has-text-centered my-6'}>Welcome to Routing Algorithms!</h1>
+            <h1 className={'title has-text-centered my-6'}>Welcome to Routing Algorithms Visualizer!</h1>
             <section className="columns mb-6">
                 <div className="container column is-12">
                     <div className="is-flex is-flex-direction-column is-size-5">
@@ -48,7 +48,7 @@ function Home() {
                                                   target={'_blank'}>routing-algorithms.netlify.app</a>
                         </p>
                         <h3 className={'has-text-weight-semibold is-size-4 mt-5  mb-3'}>
-                            How to use Routing Algorithms website
+                            How to use Routing Algorithms Visualizer
                         </h3>
                         <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
                             Graph Building User Interface
@@ -97,6 +97,12 @@ this, once again click on "Connect Nodes" and it will create and draw this edge 
                         <h3 className={'has-text-weight-semibold is-size-4 mt-5  mb-3'}>
                             {`Dijkstra's Link-State Routing Algorithm`}
                         </h3>
+                        <p>
+                            {`Dijkstra's algorithm is a centralized routing algorithm that computes the least-cost path between a source node and a
+                            destination node of a graph. Dijkstra's algorithm computes this value with the complete knowledge about the network
+                            topology including link costs between all nodes. Dijkstra's algorithm takes an iterative approach to solving this
+                            problem.`}
+                        </p>
                         <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
                             Algorithm Information
                         </h4>
@@ -116,6 +122,12 @@ this, once again click on "Connect Nodes" and it will create and draw this edge 
                         <h3 className={'has-text-weight-semibold is-size-4 mt-5  mb-3'}>
                             {`Distance Vector Routing Algorithm`}
                         </h3>
+                        <p>
+                            {`Dijkstra's algorithm is a centralized routing algorithm that computes the least-cost path between a source node and a 
+                            destination node of a graph. This algorithm computes this value with the complete knowledge about the network 
+                            topology including link costs between all nodes. Furthermore, it takes an iterative approach to solving this 
+                            problem.`}
+                        </p>
                         <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
                             Algorithm Information
                         </h4>
