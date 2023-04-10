@@ -46,7 +46,25 @@ problem.
 doing it and why.
 3. Dijkstra's algorithm maintains a table which maintains information about the algorithm's work on the graph. 
 
+### Algorithm Understanding
+
+
+
 ## Distance Vector Routing Algorithm
 
 The Distance Vector routing algorithm is a decentralized routing algorithm that computes the least-cost path between a 
-source node and a destination node of a graph. 
+source node and a destination node of a graph. This is a distributed algorithm that where the routers maintain their 
+own tables of the shortest distances. These routers communicate with each other from time to time and exchange these 
+tables and find better paths to reach other nodes.
+
+### Algorithm Info
+
+1. Our implementation of this algorithm takes input of the graph in the form of an adjacency list representation.
+2. The graph auto-generates text based on the graph and procedure to describe what the algorithm is doing, how it is
+   doing it and why.
+3. Each router maintains a table of least cost paths to other nodes
+4. This algorithm is derived using the Bellman-Ford equation
+5. The number of iterations the algorithm performs to gain full knowledge of the network is equal to the number of 
+nodes the graph has (worst case).
+
+### Algorithm Understanding
