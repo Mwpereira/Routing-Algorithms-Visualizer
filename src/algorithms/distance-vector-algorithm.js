@@ -25,20 +25,23 @@ function distanceVector(graph) {
 
     for (const [startNode, [startNodeKey, startNodeValue]] of Object.entries(Object.entries(graph))) {
         for (const [endNode, [endNodeKey, endNodeValue]] of Object.entries(Object.entries(graph[startNodeKey]))) {
+            console.log()
             distanceVectors[startNode][Object.keys(graph).indexOf(endNodeKey)] = graph[startNodeKey][endNodeKey];
         }
     }
 
     let text = `We have initialized the tables for all the ${numNodes} routers. This initial step is where the ` +
         `routers have not communicated with each other yet (t=0).`;
-    steps.push({distanceVectors, text})
+    let tempArr0 = JSON.parse(JSON.stringify(distanceVectors));
+    steps.push({distanceVectors: tempArr0, text})
     // Run the distance-vector algorithm for numIterations iterations
     for (let iteration = 1; iteration <= numNodes; iteration++) {
         // Update the distance vector for each node in the network
         const updatedDistanceVector= updateDistanceVector(numNodes, distanceVectors, graph);
         distanceVectors = updatedDistanceVector.distanceVectors;
+        let tempArr = JSON.parse(JSON.stringify(distanceVectors));
         text = updatedDistanceVector.text;
-        steps.push({distanceVectors, text})
+        steps.push({distanceVectors: tempArr, text})
     }
 
     return {distanceVectors, steps};

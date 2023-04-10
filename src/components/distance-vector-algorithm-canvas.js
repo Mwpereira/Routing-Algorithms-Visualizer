@@ -337,7 +337,7 @@ const DistanceVectorAlgorithmCanvas = () => {
                                     <tr key={rowIndex}>
                                         <td>{nodes[rowIndex].id}</td> {/* Add the first cell with the column header */}
                                         {row.map((cellData, cellIndex) => (
-                                            <td key={cellIndex}>{cellData}</td>
+                                            <td key={cellIndex}>{cellData ?? Infinity}</td>
                                         ))}
                                     </tr>
                                 ))}
