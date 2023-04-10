@@ -40,14 +40,20 @@
 
 @media (max-width: 1600px) {
     .left-arrow {
-        position: fixed;
-        top: 50%;
         left: 8rem;
     }
 
     .right-arrow {
-        position: fixed;
-        top: 50%;
         right: 8rem;
+    }
+}
+
+@media (max-height: 900px) {
+    .left-arrow {
+        top: 50%;
+    }
+
+    .right-arrow {
+        top: 50%;
     }
 }
