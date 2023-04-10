@@ -251,7 +251,7 @@ const DijkstrasAlgorithmCanvas = () => {
     };
 
     return (
-        <div className={'is-flex is-flex-direction-column columns mb-6 pb-6 '}>
+        <div className={'is-flex is-flex-direction-column columns mb-6 pb-6'}>
             <div className="container column is-12">
                 <div className="box">
                     <div className="DroppableArea">
@@ -419,7 +419,7 @@ const DijkstrasAlgorithmCanvas = () => {
                 )}
                 {!graphEditingMode() && (
                     <div className={"RA-Container"}>
-                        <h2 className={'title'}>Algorithm Steps</h2>
+                        <h2 className={'title pt-2'}>Algorithm Steps</h2>
                         <h3 className={'subtitle is-size-4 mt-3 mb-5'}>Step {currentStep + 1} of {dijkstraResult.length}</h3>
                         <p className={'is-size-5 content is-inline-'}>{<SanitizeText text={dijkstraResult[currentStep].text} />}</p>
                         <section>

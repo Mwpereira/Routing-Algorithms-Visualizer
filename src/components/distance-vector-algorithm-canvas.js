@@ -364,7 +364,7 @@ const DistanceVectorAlgorithmCanvas = () => {
                 )}
                 {!graphEditingMode() && (
                     <div className={"RA-Container"}>
-                        <h2 className={'title'}>Algorithm Steps</h2>
+                        <h2 className={'title pt-2'}>Algorithm Steps</h2>
                         <h3 className={'subtitle is-size-4 mt-3 mb-5'}>Step {currentStep + 1} of {distanceVectorResult.length}</h3>
                         <p className={'is-size-5 content is-inline-'}>{<SanitizeText text={distanceVectorResult[currentStep].text} />}</p>
                         <section>
