@@ -38,7 +38,7 @@ function distanceVector(graph) {
     // Run the distance-vector algorithm for numIterations iterations
     for (let iteration = 1; iteration <= numNodes; iteration++) {
         // Update the distance vector for each node in the network
-        const updatedDistanceVector= updateDistanceVector(numNodes, distanceVectors, graph);
+        const updatedDistanceVector= updateDistanceVector(numNodes, distanceVectors, graph, iteration);
         distanceVectors = updatedDistanceVector.distanceVectors;
         let tempArr = JSON.parse(JSON.stringify(distanceVectors));
         text = updatedDistanceVector.text;
@@ -49,7 +49,7 @@ function distanceVector(graph) {
     return {distanceVectors, steps};
 }
 
-function updateDistanceVector(numNodes, distanceVectors, graph) {
+function updateDistanceVector(numNodes, distanceVectors, graph, iter) {
     let text = ``;
     let index_to_key_mapping = Object.keys(graph)
 
@@ -86,7 +86,7 @@ function updateDistanceVector(numNodes, distanceVectors, graph) {
     }
 
     if (text.length < 1) {
-        text = `There were no shorter paths when comparing with other routers in this step`;
+        text = `There were no shorter paths when comparing with other routers in this step: t = ${iter}`;
     }
 
     return {distanceVectors, text}
