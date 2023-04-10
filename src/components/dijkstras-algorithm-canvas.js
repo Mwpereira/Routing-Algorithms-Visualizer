@@ -7,6 +7,7 @@ import {dijkstraAlgorithm} from "../algorithms/dijkstra-algorithm";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {faRefresh} from "@fortawesome/free-solid-svg-icons/faRefresh";
+import {faPenToSquare} from "@fortawesome/free-solid-svg-icons/faPenToSquare";
 
 const defaultNodeData = [
     {id: "A", x: 150, y: 100},
@@ -173,19 +174,25 @@ const DijkstrasAlgorithmCanvas = () => {
         }
     }, [currentStep]);
 
+    const removeAllSelectedEdges = () => {
+        if (edges.length > 0) {
+        edges.map((edge) => {
+            if (edge.id) {
+                deselectEdge(edge.id);
+            }
+        })
+    }
+    }
+
     useEffect(() => {
-        if (!graphEditingMode() && edges.length > 0) {
-            edges.map((edge) => {
-                if (edge.id) {
-                    deselectEdge(edge.id);
-                }
-            })
+        if (!graphEditingMode()) {
+          removeAllSelectedEdges();
         }
     }, [currentStep]);
 
     return (
-        <div className={'is-flex is-flex-direction-column columns mb-6 pb-6'}>
-            <div className="container column is-10">
+        <div className={'is-flex is-flex-direction-column columns mb-6 pb-6 '}>
+            <div className="container column is-12">
                 <div className="box">
                     <div className="DroppableArea">
                         <svg height="100%" width="100%">
@@ -199,7 +206,12 @@ const DijkstrasAlgorithmCanvas = () => {
                                         key={edge.id}
                                         onSelect={(e) => {
                                             e.stopPropagation();
-                                            handleSelectEdge(edge.id);
+                                            if (selectedEdgeIds.includes(edge.id)) {
+                                                deselectEdge(edge.id);
+                                            } else {
+                                                handleSelectEdge(edge.id);
+                                                setSelectedWeight(edge.weight)
+                                            }
                                         }}
                                         selected={selectedEdgeIds.includes(edge.id)}
                                         startNode={startNode}
@@ -210,6 +222,7 @@ const DijkstrasAlgorithmCanvas = () => {
                         </svg>
                         {nodes.map((node) => (
                             <DraggableNode
+                                disableDragging={!graphEditingMode()}
                                 key={node.id}
                                 nodeId={node.id}
                                 onClick={(selected) => {
@@ -222,7 +235,6 @@ const DijkstrasAlgorithmCanvas = () => {
                                 selected={selectedNodes.includes(node.id)}
                                 x={node.x}
                                 y={node.y}
-                                disableDragging={!graphEditingMode()}
                             />
                         ))}
                     </div>
@@ -280,24 +292,24 @@ const DijkstrasAlgorithmCanvas = () => {
                             <label className={'label'}>Algorithm Actions:</label>
                             <div className={'is-flex is-justify-content-space-between is-align-items-center'}>
                     <span>
-                    <p>Starting Node</p>
-                    <div className="select">
+                        <p>Starting Node</p>
                         <div className="select">
-                            <select
-                                id="starting-node"
-                                onChange={(e) => setStartingNode(e.target.value)}
-                                required={true}
-                                value={startingNode}
-                            >
-                                <option disabled value="">Select starting node</option>
-                                {nodes.map((node) => (
-                                    <option key={node.id} value={node.id}>
-                                        {node.id}
-                                    </option>
-                                ))}
-                            </select>
+                            <div className="select">
+                                <select
+                                    id="starting-node"
+                                    onChange={(e) => setStartingNode(e.target.value)}
+                                    required={true}
+                                    value={startingNode}
+                                >
+                                    <option disabled value="">Select starting node</option>
+                                    {nodes.map((node) => (
+                                        <option key={node.id} value={node.id}>
+                                            {node.id}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
-                    </div>
                     </span>
                                 <button
                                     className={'button is-info'}
@@ -346,21 +358,20 @@ const DijkstrasAlgorithmCanvas = () => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {dijkstraResult[currentStep].table.map((_, index) => {
+                                {dijkstraResult[currentStep].table[0].map((_, index) => {
                                     // Perform action within the map function
                                     if (dijkstraResult[currentStep].table[3][index]) {
                                         selectEdge(dijkstraResult[currentStep].table[0][index] + dijkstraResult[currentStep].table[3][index]);
                                     }
 
-                                    // Render the table row if the condition is met
-                                    return index !== dijkstraResult[currentStep].table[0].length ? (
+                                    return (
                                         <tr key={index}>
                                             <td>{dijkstraResult[currentStep].table[0][index]}</td>
                                             <td>{dijkstraResult[currentStep].table[1][index] ? 'true' : 'false'}</td>
                                             <td>{dijkstraResult[currentStep].table[2][index]}</td>
                                             <td>{dijkstraResult[currentStep].table[3][index] ?? 'none'}</td>
                                         </tr>
-                                    ) : null;
+                                    )
                                 })}
                                 </tbody>
                             </table>
@@ -368,33 +379,45 @@ const DijkstrasAlgorithmCanvas = () => {
                         <div className={'buttons is-grouped is-flex is-justify-content-space-between mt-5 pt-2'}>
                             <button
                                 className="button"
-                                onClick={() => setCurrentStep((prevStep) => Math.max(prevStep - 1, 0))}
                                 disabled={currentStep === 0}
+                                onClick={() => setCurrentStep((prevStep) => Math.max(prevStep - 1, 0))}
                             >
                                 <FontAwesomeIcon icon={faArrowLeft}/>
                             </button>
                             <button
                                 className="button"
-                                onClick={() => setCurrentStep((prevStep) => Math.min(prevStep + 1, dijkstraResult.length - 1))}
                                 disabled={currentStep === dijkstraResult.length - 1}
+                                onClick={() => setCurrentStep((prevStep) => Math.min(prevStep + 1, dijkstraResult.length - 1))}
                             >
                                 <FontAwesomeIcon icon={faArrowRight}/>
                             </button>
                         </div>
-                        <button
-                            className="button is-info mt-5"
-                            onClick={() => {
-                                infoToast('Resetting Graph...')
-                                setDijkstraResult({})
-                                setCurrentStep(0)
-                                setSelectedEdgeIds([])
-                                setEdges(defaultEdgeData)
-                                setNodes(defaultNodeData)
-                            }}
-                        >
-                            <FontAwesomeIcon icon={faRefresh}/>
-                            <p className={'ml-3'}>Reset</p>
-                        </button>
+                        <div className={'buttons is-grouped'}>
+                            <button
+                                className="button is-warning mt-5"
+                                onClick={() => {
+                                    removeAllSelectedEdges();
+                                    setDijkstraResult({})
+                                }}
+                            >
+                                <FontAwesomeIcon icon={faPenToSquare}/>
+                                <p className={'ml-3'}>Edit</p>
+                            </button>
+                            <button
+                                className="button is-info mt-5"
+                                onClick={() => {
+                                    infoToast('Resetting Graph...')
+                                    setDijkstraResult({})
+                                    setCurrentStep(0)
+                                    setSelectedEdgeIds([])
+                                    setEdges(defaultEdgeData)
+                                    setNodes(defaultNodeData)
+                                }}
+                            >
+                                <FontAwesomeIcon icon={faRefresh}/>
+                                <p className={'ml-3'}>Reset</p>
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>

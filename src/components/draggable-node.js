@@ -16,11 +16,11 @@ const DraggableNode = ({
     useEffect(() => {
         $(nodeRef.current).draggable({
             containment: "parent",
+            disabled: disableDragging,
             drag: function (event, ui) {
                 onDrag(ui.position.left, ui.position.top);
             },
             grid: [50, 50],
-            disabled: disableDragging,
         });
     }, [onDrag]);
 
