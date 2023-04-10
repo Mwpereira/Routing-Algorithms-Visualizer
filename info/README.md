@@ -110,7 +110,7 @@ nodes the graph has (worst case).
 ### Algorithm Understanding
 
 1. We initialize the tables for each router. We then iterate through the node/router's neighbours and calculate the 
-distance to its neighbours
+distance to its neighbours.
 2. We then allow each node to communicate with its neighbours about each other's least-cost paths. We perform this for 
 as many steps as the user asks for(with maximum of number of nodes).
 3. With each communication iteration, we check with the Bellman Ford equation whether the cost of the path is 

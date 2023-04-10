@@ -9,7 +9,7 @@ function Home() {
 
     return (
         <>
-            <h1 className={'title has-text-centered my-6'}>Welcome to Routing Algorithms Visualizer!</h1>
+            <h1 className={'title has-text-centered my-6'}>{`Welcome to Routing Algorithm's Visualizer!`}</h1>
             <section className="columns mb-6">
                 <div className="container column is-12">
                     <div className="is-flex is-flex-direction-column is-size-5">
@@ -103,7 +103,7 @@ this, once again click on "Connect Nodes" and it will create and draw this edge 
                             topology including link costs between all nodes. Furthermore, it takes an iterative approach to solving this 
                             problem.`}
                         </p>
-                        <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
+                        <h4 className={'has-text-weight-semibold mt-5 mb-3'}>
                             Algorithm Information
                         </h4>
                         <p className={'ml-5'}>
@@ -116,7 +116,7 @@ this, once again click on "Connect Nodes" and it will create and draw this edge 
                                 <li>{`Dijkstra's algorithm maintains a table which maintains information about the algorithm's work on the graph.`}</li>
                             </ol>
                         </p>
-                        <h4 className={'has-text-weight-semibold mt-5 mb-3'}>
+                        <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
                             Algorithm Understanding
                         </h4>
                         <p className={'ml-5'}>
@@ -142,21 +142,9 @@ this, once again click on "Connect Nodes" and it will create and draw this edge 
                             own tables of the shortest distances. These routers communicate with each other from time to time and exchange these 
                             tables and find better paths to reach other nodes.`}
                         </p>
-                        <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
+                        <h4 className={'has-text-weight-semibold mt-5 mb-3'}>
                             Algorithm Information
                         </h4>
-                        <p className={'ml-5'}>
-                            <ol>
-                                <li>{`We initialize the table which stores whether we have visited a node already or not, the shortest distance to the
-                                    nodes and the root/previous node that a node is connected to(dijkstra's algorithm forms a tree at the end).`}
-                                </li>
-                                <li>{`After this, we loop over all the nodes in the graph till we have visited all the nodes. We choose which node to
-                                    visit next by taking the shortest/closet node that we have not visited yet.`}
-                                </li>
-                                <li>{`We take the node we are currently evaluating and loop over all its neighbours to check whether the distances
-                                    to them are shorter than through the current node or through the values we already have in the table.`}</li>
-                            </ol>
-                        </p>
                         <p className={'ml-5'}>
                             <ol>
                                 <li>Our implementation of this algorithm takes input of the graph in the form of an
@@ -174,9 +162,21 @@ this, once again click on "Connect Nodes" and it will create and draw this edge 
                                 </li>
                             </ol>
                         </p>
-                        <h4 className={'has-text-weight-semibold mt-5 mb-3'}>
+                        <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
                             Algorithm Understanding
                         </h4>
+                        <p className={'ml-5'}>
+                            <ol>
+                                <li>{`We initialize the tables for each router. We then iterate through the node/router's neighbours and calculate the
+                                    distance to its neighbours.`}
+                                </li>
+                                <li>{`We then allow each node to communicate with its neighbours about each other's least-cost paths. We perform this for
+                                    as many steps as the user asks for(with maximum of number of nodes).`}
+                                </li>
+                                <li>{`With each communication iteration, we check with the Bellman Ford equation whether the cost of the path is
+                                    less than.`}</li>
+                            </ol>
+                        </p>
                     </div>
                 </div>
             </section>
