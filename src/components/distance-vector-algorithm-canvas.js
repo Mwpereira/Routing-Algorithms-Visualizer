@@ -10,6 +10,7 @@ import {faPenToSquare} from "@fortawesome/free-solid-svg-icons/faPenToSquare";
 import {distanceVectorAlgorithm} from "../algorithms/distance-vector-algorithm";
 
 const defaultNodeData = [
+    {id: "A", x: 150, y: 100},
     {id: "B", x: 400, y: 100},
     {id: "C", x: 250, y: 250},
 ]
@@ -299,7 +300,6 @@ const DistanceVectorAlgorithmCanvas = () => {
                                         }
 
                                         infoToast('Calculating...')
-
                                         const result = distanceVectorAlgorithm({edges, nodes}); // Calculate the result
                                         const steps = result.steps
                                         console.log(steps)
