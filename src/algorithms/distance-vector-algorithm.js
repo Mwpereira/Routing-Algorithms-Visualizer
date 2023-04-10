@@ -1,5 +1,8 @@
+import {convertCanvasGraphOutput} from "../utilities/canvas-converter";
+
 export const distanceVectorAlgorithm = (graph) => {
-    return distanceVector(graph);
+    const convertedGraph = convertCanvasGraphOutput(graph);
+    return distanceVector(convertedGraph);
 }
 
 function distanceVector(graph) {
@@ -7,7 +10,7 @@ function distanceVector(graph) {
 
     // Get the number of nodes in the network
     const numNodes = Object.keys(graph).length;
-    console.log(numNodes)
+
     // Initialize the distance vectors to infinity for all nodes except the ones that are directly connected to the node
 
     // arr[node][distance]
@@ -15,39 +18,30 @@ function distanceVector(graph) {
         Array.from({ length: numNodes }, () => Infinity)
     );
 
-    console.log("INIT")
-    console.log(distanceVectors)
-
     // init distanceVectors with the values to themselves
     for (let i = 0; i < numNodes; i++) {
         distanceVectors[i][i] = 0;
     }
 
-    console.log("INIT")
-    console.log(distanceVectors)
-
     for (const [startNode, [startNodeKey, startNodeValue]] of Object.entries(Object.entries(graph))) {
         for (const [endNode, [endNodeKey, endNodeValue]] of Object.entries(Object.entries(graph[startNodeKey]))) {
             distanceVectors[startNode][Object.keys(graph).indexOf(endNodeKey)] = graph[startNodeKey][endNodeKey];
-            // console.log(`{${startNode}:${endNode}} == ${graph[startNodeKey][endNodeKey]} = || ${endNodeKey} = ${endNodeValue}`);
         }
     }
 
-    console.table(distanceVectors)
     let text = `We have initialized the tables for all the ${numNodes} routers. This initial step is where the ` +
-        `routers have not communicated with each other yet(t=0)`;
+        `routers have not communicated with each other yet (t=0).`;
     steps.push({distanceVectors, text})
     // Run the distance-vector algorithm for numIterations iterations
     for (let iteration = 1; iteration <= numNodes; iteration++) {
         // Update the distance vector for each node in the network
-        //console.log(`Starting Node ${node} in Iteration ${iteration}`)
-        let text;
-        distanceVectors, text = updateDistanceVector(numNodes, distanceVectors, graph);
+        const updatedDistanceVector= updateDistanceVector(numNodes, distanceVectors, graph);
+        distanceVectors = updatedDistanceVector.distanceVectors;
+        text = updatedDistanceVector.text;
         steps.push({distanceVectors, text})
-        console.table(distanceVectors)
     }
 
-    return distanceVectors, steps;
+    return {distanceVectors, steps};
 }
 
 function updateDistanceVector(numNodes, distanceVectors, graph) {
@@ -71,8 +65,6 @@ function updateDistanceVector(numNodes, distanceVectors, graph) {
                         `${distanceVectors[node][neighborNode] + distanceVectors[neighborNode][i]} < ${distanceVectors[node][i]}).\n\n`;
 
                     distanceVectors[node][i] = distanceVectors[node][neighborNode] + distanceVectors[neighborNode][i];
-
-                    console.log(`changing ${node, neighborNode, i}`)
                 }
             }
         }
@@ -82,5 +74,5 @@ function updateDistanceVector(numNodes, distanceVectors, graph) {
         text = `There were no shorter paths when comparing with other routers in this step`;
     }
 
-    return distanceVectors, text
+    return {distanceVectors, text}
 }

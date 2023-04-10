@@ -1,31 +1,10 @@
 // This file contains the implementation of the Dijkstra's algorithm
+import {convertCanvasGraphOutput} from "../utilities/canvas-converter";
+
 export const dijkstraAlgorithm = (graph, startNode) => {
     const convertedGraph = convertCanvasGraphOutput(graph);
     return dijkstra(convertedGraph, startNode);
 }
-
-// Converts the graph's output from canvas-graph to the format that the algorithm expects
-function convertCanvasGraphOutput(graph) {
-    let nodes = graph.nodes;
-    let edges = graph.edges;
-    let newGraph = {};
-
-    for (let i = 0; i < nodes.length; i++) {
-        const currentNodeId = nodes[i].id;
-        newGraph[currentNodeId] = {}; // Initialize an empty object for the current node ID
-    }
-
-    for (let j = 0; j < edges.length; j++) {
-        let currentEdge = edges[j];
-
-        // Set the edge weight for both directions
-        newGraph[currentEdge.startNodeId][currentEdge.endNodeId] = currentEdge.weight;
-        newGraph[currentEdge.endNodeId][currentEdge.startNodeId] = currentEdge.weight;
-    }
-
-    return newGraph;
-}
-
 
 // We calculate which of the node in the remaining graph has the minimum distance to already explored graph
 function calculateMinDistance(queue, distances) {
@@ -134,8 +113,7 @@ function dijkstra(graph, startNode) {
         steps.push({table, text})
     }
 
-    let path = dijkstra_path_calculator(startNode, graph, prev);
-    console.table(path);
+    const path = dijkstra_path_calculator(startNode, graph, prev);
 
     return {distances, prev, steps, path};
 }

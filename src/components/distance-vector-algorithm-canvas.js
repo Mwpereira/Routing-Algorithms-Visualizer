@@ -3,14 +3,13 @@ import DraggableNode from "../components/draggable-node";
 import Edge from "./edge";
 import "../assets/styles/canvas.css"
 import {dismissToast, errorToast, infoToast, successToast} from "../utilities/toast";
-import {dijkstraAlgorithm} from "../algorithms/dijkstra-algorithm";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {faRefresh} from "@fortawesome/free-solid-svg-icons/faRefresh";
 import {faPenToSquare} from "@fortawesome/free-solid-svg-icons/faPenToSquare";
+import {distanceVectorAlgorithm} from "../algorithms/distance-vector-algorithm";
 
 const defaultNodeData = [
-    {id: "A", x: 150, y: 100},
     {id: "B", x: 400, y: 100},
     {id: "C", x: 250, y: 250},
 ]
@@ -20,7 +19,7 @@ const defaultEdgeData = [
     {endNodeId: "C", id: "BC", startNodeId: "B", weight: 15},
 ]
 
-const DijkstrasAlgorithmCanvas = () => {
+const DistanceVectorAlgorithmCanvas = () => {
     // State for nodes in the graph with initial values
     const [nodes, setNodes] = useState(defaultNodeData);
     // State for edges between nodes in the graph with initial values
@@ -31,22 +30,14 @@ const DijkstrasAlgorithmCanvas = () => {
     const [selectedNodes, setSelectedNodes] = useState([]);
     // State for the selected weight of the edge
     const [selectedWeight, setSelectedWeight] = useState(null);
-    // State for the starting node
-    const [startingNode, setStartingNode] = useState("A");
-    // State for steps in the Dijkstra's algorithm
+    // State for steps in the Distance Vector algorithm
     const [currentStep, setCurrentStep] = useState(0);
-    // State which stores the result of the Dijkstra's algorithm
-    const [dijkstraResult, setDijkstraResult] = useState({});
-    // State which stores the path for the Dijkstra's algorithm
-    const [dijkstraPath, setDijkstraPath] = useState([]);
-    // State which stores the delta values for the Dijkstra's algorithm
-    const [deltaValues, setDeltaValues] = useState([]);
-    // State which stores the steps for the Dijkstra's algorithm
-    const [nodeSteps, setNodeSteps] = useState([]);
+    // State which stores the result of the Distance Vector algorithm
+    const [distanceVectorResult, setDistanceVectorResult] = useState({});
 
     // Function to check if the graph is in edit mode
     const graphEditingMode = () => {
-        return Object.keys(dijkstraResult).length === 0;
+        return Object.keys(distanceVectorResult).length === 0;
     }
 
     // Updates the position of a node in the graph
@@ -79,7 +70,7 @@ const DijkstrasAlgorithmCanvas = () => {
         }
     };
 
-    // Select Edge for Dijkstra's Algorithm Instructions
+    // Select Edge for Distance Vector Algorithm Instructions
     const selectEdge = (edgeId) => {
         const edge = edges.find((c) => c.id === edgeId || c.id === edgeId.split("").reverse().join(""))
 
@@ -88,7 +79,7 @@ const DijkstrasAlgorithmCanvas = () => {
         }
     };
 
-    // Deselect Edge for Dijkstra's Algorithm Instructions
+    // Deselect Edge for Distance Vector Algorithm Instructions
     const deselectEdge = (edgeId) => {
         const edge = edges.find((c) => c.id === edgeId || c.id === edgeId.split("").reverse().join(""))
 
@@ -198,40 +189,6 @@ const DijkstrasAlgorithmCanvas = () => {
         }
     }, [currentStep]);
 
-    const generateDeltaValues = (table, action) => {
-        const newDeltaValues = table[1];
-        const currentSteps = nodeSteps;
-
-        if (action === 'backward') {
-            setSelectedNodes([nodeSteps[currentStep - 1]]);
-            setDeltaValues(newDeltaValues);
-        } else {
-            if (nodeSteps.length !== nodes.length) {
-                console.log(deltaValues.length === 0)
-                if (deltaValues.length === 0) {
-                    for (let i = 0; i < newDeltaValues.length; i++) {
-                        if (newDeltaValues[i]  === true) {
-                            const letter = table[0][i]
-                            setSelectedNodes([letter]);
-                            currentSteps.push(letter);
-                            setNodeSteps(currentSteps)
-                            break;
-                        }
-                    }
-                } else {
-                    const intersection = deltaValues.findIndex((element, index) => element !== newDeltaValues[index]); // Only one value should be different between the two arrays
-                    const letter = table[0][intersection] // Thus we choose the first index/letter in the array
-                    setSelectedNodes([letter]);
-                    currentSteps.push(letter);
-                    setNodeSteps(currentSteps)
-                }
-                setDeltaValues(newDeltaValues);
-            } else {
-                setSelectedNodes([nodeSteps[currentStep + 1]])
-            }
-        }
-    }
-
     return (
         <div className={'is-flex is-flex-direction-column columns mb-6 pb-6 '}>
             <div className="container column is-12">
@@ -333,26 +290,6 @@ const DijkstrasAlgorithmCanvas = () => {
                         <section className={'mt-5'}>
                             <label className={'label'}>Algorithm Actions:</label>
                             <div className={'is-flex is-justify-content-space-between is-align-items-center'}>
-                    <span>
-                        <p>Starting Node</p>
-                        <div className="select">
-                            <div className="select">
-                                <select
-                                    id="starting-node"
-                                    onChange={(e) => setStartingNode(e.target.value)}
-                                    required={true}
-                                    value={startingNode}
-                                >
-                                    <option disabled value="">Select starting node</option>
-                                    {nodes.map((node) => (
-                                        <option key={node.id} value={node.id}>
-                                            {node.id}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
-                    </span>
                                 <button
                                     className={'button is-info'}
                                     onClick={() => {
@@ -361,21 +298,13 @@ const DijkstrasAlgorithmCanvas = () => {
                                             return;
                                         }
 
-                                        if (!nodes.find((node) => node.id === startingNode)) {
-                                            errorToast('Please select a starting node');
-                                            return;
-                                        }
-
                                         infoToast('Calculating...')
 
-                                        const result = dijkstraAlgorithm({edges, nodes}, startingNode); // Calculate the result
+                                        const result = distanceVectorAlgorithm({edges, nodes}); // Calculate the result
                                         const steps = result.steps
-                                        const path = result.path
-
+                                        console.log(steps)
                                         setSelectedNodes([]); // Unselect all nodes
-                                        setDijkstraResult(steps); // Set the result of the algorithm
-                                        setDijkstraPath(path); // Set the path of the algorithm
-                                        generateDeltaValues(steps[0].table, 'forward'); // Generate the delta values
+                                        setDistanceVectorResult(steps); // Set the result of the algorithm
 
                                         dismissToast(2) // Remove the toast with the Assigned ID of 2 which is that of the infoToast
 
@@ -391,56 +320,27 @@ const DijkstrasAlgorithmCanvas = () => {
                 {!graphEditingMode() && (
                     <div className={"RA-Container"}>
                         <h2 className={'title'}>Algorithm Steps</h2>
-                        <h3 className={'subtitle is-size-4 mt-3 mb-5'}>Step {currentStep + 1} of {dijkstraResult.length}</h3>
-                        <p className={'is-size-5 content is-inline-'}>{dijkstraResult[currentStep].text}</p>
+                        <h3 className={'subtitle is-size-4 mt-3 mb-5'}>Step {currentStep + 1} of {distanceVectorResult.length}</h3>
+                        <p className={'is-size-5 content is-inline-'}>{distanceVectorResult[currentStep].text}</p>
                         <section>
                             <table className={'table mb-3'}>
                                 <thead>
                                 <tr>
-                                    <th>Node</th>
-                                    <th>Is Visited?</th>
-                                    <th>Distance</th>
-                                    <th>Previous Node</th>
+                                    <th></th> {/* Empty cell for the first column header */}
+                                    {nodes.map((node) => {
+                                        return <th key={node.id}>{node.id}</th>;
+                                    })}
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {dijkstraResult[currentStep].table[0].map((_, index) => {
-                                    // Perform action within the map function
-                                    if (dijkstraResult[currentStep].table[3][index]) {
-                                        selectEdge(dijkstraResult[currentStep].table[0][index] + dijkstraResult[currentStep].table[3][index]);
-                                    }
-
-                                    return (
-                                        <tr key={index}>
-                                            <td>{dijkstraResult[currentStep].table[0][index]}</td>
-                                            <td>{dijkstraResult[currentStep].table[1][index] ? 'true' : 'false'}</td>
-                                            <td>{dijkstraResult[currentStep].table[2][index]}</td>
-                                            <td>{dijkstraResult[currentStep].table[3][index] ?? 'none'}</td>
-                                        </tr>
-                                    )
-                                })}
-                                </tbody>
-                            </table>
-                            <p className={'is-size-7 mb-5'}><span
-                                className={'has-text-weight-semibold'}>Legend:</span><br/> Infinity (Distance) = Unreachable at the moment from the starting node, none
-                                (Previous Node) = Either not computed yet or is the starting node</p>
-                            <caption className={'has-text-left label pt-1'}>Final Least Cost Paths to Destination Nodes</caption>
-                            <table className={'table'}>
-                                <thead>
-                                <tr>
-                                    <th>Node</th>
-                                    <th>Final Path</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {dijkstraResult[currentStep].table[0].map((_, index) => {
-                                    return (
-                                        <tr key={index}>
-                                            <td>{dijkstraResult[currentStep].table[0][index]}</td>
-                                            <td>{dijkstraPath[index]}</td>
-                                        </tr>
-                                    )
-                                })}
+                                {distanceVectorResult[currentStep].distanceVectors.map((row, rowIndex) => (
+                                    <tr key={rowIndex}>
+                                        <td>{nodes[rowIndex].id}</td> {/* Add the first cell with the column header */}
+                                        {row.map((cellData, cellIndex) => (
+                                            <td key={cellIndex}>{cellData}</td>
+                                        ))}
+                                    </tr>
+                                ))}
                                 </tbody>
                             </table>
                         </section>
@@ -450,17 +350,15 @@ const DijkstrasAlgorithmCanvas = () => {
                                 disabled={currentStep === 0}
                                 onClick={(() => {
                                     setCurrentStep((prevStep) => Math.max(prevStep - 1, 0))
-                                    generateDeltaValues(dijkstraResult[currentStep - 1].table, 'backward');
                                 })}
                             >
                                 <FontAwesomeIcon icon={faArrowLeft}/>
                             </button>
                             <button
                                 className="button"
-                                disabled={currentStep === dijkstraResult.length - 1}
+                                disabled={currentStep === distanceVectorResult.length - 1}
                                 onClick={(() => {
-                                    setCurrentStep((prevStep) => Math.min(prevStep + 1, dijkstraResult.length - 1))
-                                    generateDeltaValues(dijkstraResult[currentStep + 1].table, 'forward');
+                                    setCurrentStep((prevStep) => Math.min(prevStep + 1, distanceVectorResult.length - 1))
                                 })}
                             >
                                 <FontAwesomeIcon icon={faArrowRight}/>
@@ -471,13 +369,10 @@ const DijkstrasAlgorithmCanvas = () => {
                                 className="button is-warning mt-5"
                                 onClick={() => {
                                     removeAllSelectedEdges();
-                                    setDijkstraResult({})
-                                    setDijkstraPath([])
+                                    setDistanceVectorResult({})
                                     setCurrentStep(0)
                                     setSelectedEdgeIds([])
                                     setSelectedNodes([])
-                                    setNodeSteps([])
-                                    setDeltaValues([])
                                 }}
                             >
                                 <FontAwesomeIcon icon={faPenToSquare}/>
@@ -487,15 +382,12 @@ const DijkstrasAlgorithmCanvas = () => {
                                 className="button is-info mt-5"
                                 onClick={() => {
                                     infoToast('Resetting Graph...')
-                                    setDijkstraResult({})
-                                    setDijkstraPath([])
+                                    setDistanceVectorResult({})
                                     setCurrentStep(0)
                                     setSelectedEdgeIds([])
                                     setSelectedNodes([])
                                     setEdges(defaultEdgeData)
                                     setNodes(defaultNodeData)
-                                    setNodeSteps([])
-                                    setDeltaValues([])
                                 }}
                             >
                                 <FontAwesomeIcon icon={faRefresh}/>
@@ -510,4 +402,4 @@ const DijkstrasAlgorithmCanvas = () => {
 };
 
 
-export default DijkstrasAlgorithmCanvas;
+export default DistanceVectorAlgorithmCanvas;
