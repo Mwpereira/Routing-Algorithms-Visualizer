@@ -48,7 +48,7 @@ function Home() {
                                                   target={'_blank'}>routing-algorithms.netlify.app</a>
                         </p>
                         <h3 className={'has-text-weight-semibold is-size-4 mt-5  mb-3'}>
-                            How to use Routing Algorithms Visualizer
+                            {`How to use Routing Algorithm's Visualizer`}
                         </h3>
                         <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
                             Graph Building User Interface

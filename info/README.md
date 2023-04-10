@@ -28,7 +28,7 @@ Steps on how to run the project locally are located within the `README.md` file 
 
 Site is located at <a href="https://routing-algorithms.netlify.app/">routing-algorithms.netlify.app/</a>
 
-## How to use Routing Algorithms website
+## How to use Routing Algorithm's Visualizer
 
 ### Graph Building User Interface
 
