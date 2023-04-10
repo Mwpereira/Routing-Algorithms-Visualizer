@@ -361,26 +361,26 @@ const DijkstrasAlgorithmCanvas = () => {
                         <section className={'mt-5'}>
                             <label className={'label'}>Algorithm Actions:</label>
                             <div className={'is-flex is-justify-content-space-between is-align-items-center'}>
-                    <span>
-                        <p>Starting Node</p>
-                        <div className="select">
-                            <div className="select">
-                                <select
-                                    id="starting-node"
-                                    onChange={(e) => setStartingNode(e.target.value)}
-                                    required={true}
-                                    value={startingNode}
-                                >
-                                    <option disabled value="">Select starting node</option>
-                                    {nodes.map((node) => (
-                                        <option key={node.id} value={node.id}>
-                                            {node.id}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
-                    </span>
+                                <span>
+                                    <p>Starting Node</p>
+                                    <div className="select">
+                                        <div className="select">
+                                            <select
+                                                id="starting-node"
+                                                onChange={(e) => setStartingNode(e.target.value)}
+                                                required={true}
+                                                value={startingNode}
+                                            >
+                                                <option disabled value="">Select starting node</option>
+                                                {nodes.map((node) => (
+                                                    <option key={node.id} value={node.id}>
+                                                        {node.id}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </span>
                                 <button
                                     className={'button is-info'}
                                     onClick={() => {

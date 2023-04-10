@@ -31,6 +31,8 @@ const DistanceVectorAlgorithmCanvas = () => {
     const [selectedNodes, setSelectedNodes] = useState([]);
     // State for the selected weight of the edge
     const [selectedWeight, setSelectedWeight] = useState(null);
+    // State for the starting node
+    const [numberOfIterations, setNumberOfIterations] = useState(3);
     // State for steps in the Distance Vector algorithm
     const [currentStep, setCurrentStep] = useState(0);
     // State which stores the result of the Distance Vector algorithm
@@ -108,6 +110,7 @@ const DistanceVectorAlgorithmCanvas = () => {
             y: Math.floor(Math.random() * 350),
         };
         setNodes((prevNodes) => [...prevNodes, newNode]);
+        setNumberOfIterations(nodes.length + 1)
     };
 
     // Connects two selected nodes in the graph
@@ -311,6 +314,26 @@ const DistanceVectorAlgorithmCanvas = () => {
                         <section className={'mt-5'}>
                             <label className={'label'}>Algorithm Actions:</label>
                             <div className={'is-flex is-justify-content-space-between is-align-items-center'}>
+                                <span>
+                                    <p>Number of Iterations</p>
+                                    <div className="select">
+                                        <div className="select">
+                                            <select
+                                                id="starting-node"
+                                                onChange={(e) => setNumberOfIterations(e.target.value)}
+                                                required={true}
+                                                value={numberOfIterations}
+                                            >
+                                                <option disabled value="">Select number of iterations</option>
+                                                {nodes.map((node, index) => (
+                                                    <option key={node.id} value={index + 1}>
+                                                        {index + 1}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </span>
                                 <button
                                     className={'button is-info'}
                                     onClick={() => {
@@ -320,9 +343,10 @@ const DistanceVectorAlgorithmCanvas = () => {
                                         }
 
                                         infoToast('Calculating...')
-                                        const result = distanceVectorAlgorithm({edges, nodes}); // Calculate the result
+
+                                        const result = distanceVectorAlgorithm({edges, nodes}, numberOfIterations); // Calculate the result
                                         const steps = result.steps
-                                        console.log(steps)
+
                                         setSelectedNodes([]); // Unselect all nodes
                                         setDistanceVectorResult(steps); // Set the result of the algorithm
 

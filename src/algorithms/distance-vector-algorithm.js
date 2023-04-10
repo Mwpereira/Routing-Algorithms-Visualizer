@@ -1,11 +1,11 @@
 import {convertCanvasGraphOutput} from "../utilities/canvas-converter";
 
-export const distanceVectorAlgorithm = (graph) => {
+export const distanceVectorAlgorithm = (graph, numberOfIterations) => {
     const convertedGraph = convertCanvasGraphOutput(graph);
-    return distanceVector(convertedGraph);
+    return distanceVector(convertedGraph, numberOfIterations);
 }
 
-function distanceVector(graph) {
+function distanceVector(graph, numberOfIterations) {
     let steps = [];
 
     // Get the number of nodes in the network
