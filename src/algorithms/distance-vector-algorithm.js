@@ -1,8 +1,10 @@
-export const distanceVectorAlgorithm = (adjacencyMatrix, numIterations) => {
-    return distanceVector(adjacencyMatrix, numIterations);
+export const distanceVectorAlgorithm = (graph) => {
+    return distanceVector(graph);
 }
 
-function distanceVector(graph, numIterations) {
+function distanceVector(graph) {
+    let steps = [];
+
     // Get the number of nodes in the network
     const numNodes = Object.keys(graph).length;
     console.log(numNodes)
@@ -32,18 +34,26 @@ function distanceVector(graph, numIterations) {
     }
 
     console.table(distanceVectors)
+    let text = `We have initialized the tables for all the ${numNodes} routers. This initial step is where the ` +
+        `routers have not communicated with each other yet(t=0)`;
+    steps.push({distanceVectors, text})
     // Run the distance-vector algorithm for numIterations iterations
-    for (let iteration = 1; iteration <= numIterations; iteration++) {
+    for (let iteration = 1; iteration <= numNodes; iteration++) {
         // Update the distance vector for each node in the network
         //console.log(`Starting Node ${node} in Iteration ${iteration}`)
-        distanceVectors = updateDistanceVector(numNodes, distanceVectors);
+        let text;
+        distanceVectors, text = updateDistanceVector(numNodes, distanceVectors, graph);
+        steps.push({distanceVectors, text})
         console.table(distanceVectors)
     }
 
-    return distanceVectors;
+    return distanceVectors, steps;
 }
 
-function updateDistanceVector(numNodes, distanceVectors) {
+function updateDistanceVector(numNodes, distanceVectors, graph) {
+    let text = ``;
+    let index_to_key_mapping = Object.keys(graph)
+
     for (let node = 0; node < numNodes; node++) {
         for (let neighborNode = 0; neighborNode < numNodes; neighborNode++) {
             if (neighborNode === node) {
@@ -55,11 +65,22 @@ function updateDistanceVector(numNodes, distanceVectors) {
                 }
 
                 if (distanceVectors[node][neighborNode] + distanceVectors[neighborNode][i] < distanceVectors[node][i]) {
-                    distanceVectors[node][i] = distanceVectors[node][neighborNode] + distanceVectors[neighborNode][i]
+                    text += `We found that through router ${index_to_key_mapping[node]} to ` +
+                        `${index_to_key_mapping[neighborNode]} we can go to ${index_to_key_mapping[i]} faster. ` +
+                        `The distance compared is (` +
+                        `${distanceVectors[node][neighborNode] + distanceVectors[neighborNode][i]} < ${distanceVectors[node][i]}).\n\n`;
+
+                    distanceVectors[node][i] = distanceVectors[node][neighborNode] + distanceVectors[neighborNode][i];
+
                     console.log(`changing ${node, neighborNode, i}`)
                 }
             }
         }
     }
-    return distanceVectors
+
+    if (text.length < 1) {
+        text = `There were no shorter paths when comparing with other routers in this step`;
+    }
+
+    return distanceVectors, text
 }
