@@ -1,5 +1,7 @@
 import { toast } from 'react-toastify'
 
+// This file is used to create toast notifications
+
 export const successToast = (message) => {
     toast.success(message)
 }

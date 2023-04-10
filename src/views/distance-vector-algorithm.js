@@ -3,6 +3,7 @@ import DistanceVectorAlgorithmCanvas from '../components/distance-vector-algorit
 import { DISTANCE_VECTOR_ALGORITHM_PAGE } from '../constants/pages'
 import { setWindowTitle } from '../utilities/website'
 
+// Function to render the Distance Vector Algorithm page
 function DistanceVectorAlgorithm() {
     useEffect(() => {
         setWindowTitle(DISTANCE_VECTOR_ALGORITHM_PAGE)

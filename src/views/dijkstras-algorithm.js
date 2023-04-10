@@ -3,6 +3,7 @@ import DijkstrasAlgorithmCanvas from '../components/dijkstras-algorithm-canvas'
 import { DIJKSTRAS_ALGORITHM_PAGE } from '../constants/pages'
 import { setWindowTitle } from '../utilities/website'
 
+// Function to render the Dijkstra's Algorithm page
 function DijkstrasAlgorithm() {
     useEffect(() => {
         setWindowTitle(DIJKSTRAS_ALGORITHM_PAGE)

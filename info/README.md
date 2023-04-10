@@ -63,6 +63,8 @@ To choose a starting node or the number of iterations, choose from either of the
 
 To calculate a graph, click on the "Calculate" button. This will use the selected algorithm and will display step-by-step instructions on how the algorithm works.
 
+To navigate between steps, click on the either the left or right arrows found on the sides of the web page which appear after calculating the graph.
+
 To edit an existing graph that has been calculated, click on the "Edit" button.
 
 To clear the graph, click on the "Rest" button.

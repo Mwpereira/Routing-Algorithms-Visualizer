@@ -1,5 +1,6 @@
 import { Fragment } from 'react'
 
+// This function is used to sanitize text that is passed to the component
 function SanitizedText({ text }) {
     const content = text.split('\n')
 

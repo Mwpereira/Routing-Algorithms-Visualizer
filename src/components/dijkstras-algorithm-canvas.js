@@ -297,7 +297,7 @@ const DijkstrasAlgorithmCanvas = () => {
                                         }
                                     }}
                                 >
-                                    Delete Node
+                                    Delete Node(s)
                                 </button>
                                 <button className={'button'} onClick={() => deleteEdge()}>
                                     Delete Edge
