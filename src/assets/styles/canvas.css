@@ -29,19 +29,19 @@
 .left-arrow {
   position: fixed;
   top: 23.438rem;
-  left: 12.5rem;
+  left: 17.5rem;
 }
 
 .right-arrow {
   position: fixed;
   top: 23.438rem;
-  right: 12.5rem;
+  right: 17.5rem;
 }
 
 @media (max-width: 1600px) {
   .left-arrow {
     position: fixed;
-    top: 50%; 
+    top: 50%;
     left: 8rem;
   }
 
