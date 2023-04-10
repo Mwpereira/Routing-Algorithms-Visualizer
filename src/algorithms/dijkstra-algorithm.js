@@ -43,6 +43,32 @@ function calculateMinDistance(queue, distances) {
 }
 
 // Function to find graph, shortest path given a graph and start node. Graph is in form of adjacency list
+function dijkstra_path_calculator(startNode, graph, prev) {
+    let path = [];
+
+    for (const node in graph) {
+        let path_string = ``;
+        if (node === startNode) {
+            path_string = node;
+        }
+        else {
+            let temp_node = node
+            path_string = ` ${temp_node} `;
+            while (startNode !== temp_node) {
+                temp_node = prev[temp_node];
+                if (temp_node === undefined) {
+                    temp_node = startNode
+                }
+                path_string += ` ${temp_node} `;
+            }
+        }
+        path.push(path_string);
+    }
+
+    return path
+}
+
+// Function to find graph, shortest path given a graph and start node. Graph is in form of adjacency list
 function dijkstra(graph, startNode) {
     let distances = {};
     let visited = {};
@@ -111,5 +137,8 @@ function dijkstra(graph, startNode) {
         console.log(text)
     }
 
-    return distances, prev, steps;
+    let path = dijkstra_path_calculator(startNode, graph, prev);
+    console.table(path);
+
+    return distances, prev, steps, path;
 }
