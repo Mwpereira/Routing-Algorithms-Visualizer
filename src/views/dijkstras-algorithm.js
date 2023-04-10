@@ -1,12 +1,12 @@
-import {useEffect} from "react";
-import {setWindowTitle} from "../utilities/website";
-import {DIJKSTRAS_ALGORITHM_PAGE} from "../constants/pages";
-import DijkstrasAlgorithmCanvas from "../components/dijkstras-algorithm-canvas";
+import { useEffect } from 'react'
+import DijkstrasAlgorithmCanvas from '../components/dijkstras-algorithm-canvas'
+import { DIJKSTRAS_ALGORITHM_PAGE } from '../constants/pages'
+import { setWindowTitle } from '../utilities/website'
 
 function DijkstrasAlgorithm() {
     useEffect(() => {
         setWindowTitle(DIJKSTRAS_ALGORITHM_PAGE)
-    });
+    })
 
     return (
         <>
@@ -18,4 +18,4 @@ function DijkstrasAlgorithm() {
     )
 }
 
-export default DijkstrasAlgorithm;
+export default DijkstrasAlgorithm

@@ -1,12 +1,12 @@
-import {useEffect} from "react";
-import {setWindowTitle} from "../utilities/website";
-import {DISTANCE_VECTOR_ALGORITHM_PAGE} from "../constants/pages";
-import DistanceVectorAlgorithmCanvas from "../components/distance-vector-algorithm-canvas";
+import { useEffect } from 'react'
+import DistanceVectorAlgorithmCanvas from '../components/distance-vector-algorithm-canvas'
+import { DISTANCE_VECTOR_ALGORITHM_PAGE } from '../constants/pages'
+import { setWindowTitle } from '../utilities/website'
 
 function DistanceVectorAlgorithm() {
     useEffect(() => {
         setWindowTitle(DISTANCE_VECTOR_ALGORITHM_PAGE)
-    });
+    })
 
     return (
         <>
@@ -18,4 +18,4 @@ function DistanceVectorAlgorithm() {
     )
 }
 
-export default DistanceVectorAlgorithm;
+export default DistanceVectorAlgorithm

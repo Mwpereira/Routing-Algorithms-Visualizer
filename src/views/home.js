@@ -1,11 +1,11 @@
-import {useEffect} from "react";
-import {setWindowTitle} from "../utilities/website";
-import {HOME_PAGE} from "../constants/pages";
+import { useEffect } from 'react'
+import { HOME_PAGE } from '../constants/pages'
+import { setWindowTitle } from '../utilities/website'
 
 function Home() {
     useEffect(() => {
         setWindowTitle(HOME_PAGE)
-    });
+    })
 
     return (
         <>
@@ -13,84 +13,79 @@ function Home() {
             <section className="columns mb-6">
                 <div className="container column is-12">
                     <div className="is-flex is-flex-direction-column is-size-5">
-                        <h2 className={'title'} style={{fontSize: '30px'}}>CPS 706 - Group 13</h2>
+                        <h2 className={'title'} style={{ fontSize: '30px' }}>
+                            CPS 706 - Group 13
+                        </h2>
                         <h3 className={'is-size-4 mb-3 has-text-weight-semibold'}>Group Information:</h3>
                         <p>
                             <ul>
                                 <li>Michael Pereira - 500896409</li>
                                 <li>Udbhav Prasad - 500909034</li>
                                 <li>Himal Patel - 500873885</li>
-                                <li>Athavan Thanaraj - 501027195
-                                </li>
+                                <li>Athavan Thanaraj - 501027195</li>
                                 <li>Umair Tariq - 501050119</li>
                                 <li>Jared Amaro - 500949423</li>
                             </ul>
                         </p>
-                        <h3 className={'has-text-weight-semibold is-size-4 mt-5  mb-3'}>
-                            Installation Instructions:
-                        </h3>
+                        <h3 className={'has-text-weight-semibold is-size-4 mt-5  mb-3'}>Installation Instructions:</h3>
                         <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
                             Local Development <span className={'is-italic'}>(Recommended)</span>
                         </h4>
                         <p>
                             Required: Node.js Version 18+
-
-                            <br/>
-
+                            <br />
                             Steps on how to run the project locally are located within the `README.md` file in the root
                             of the project.
                         </p>
-                        <h4 className={'has-text-weight-semibold mt-5 mb-3'}>
-                            Cloud Deployment
-                        </h4>
+                        <h4 className={'has-text-weight-semibold mt-5 mb-3'}>Cloud Deployment</h4>
                         <p>
-                            Site is located at <a href="https://routing-algorithms.netlify.app/" rel={'noreferrer'}
-                                                  target={'_blank'}>routing-algorithms.netlify.app</a>
+                            Site is located at{' '}
+                            <a href="https://routing-algorithms.netlify.app/" rel={'noreferrer'} target={'_blank'}>
+                                routing-algorithms.netlify.app
+                            </a>
                         </p>
                         <h3 className={'has-text-weight-semibold is-size-4 mt-5  mb-3'}>
                             {`How to use Routing Algorithm's Visualizer`}
                         </h3>
-                        <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
-                            Graph Building User Interface
-                        </h4>
+                        <h4 className={'has-text-weight-semibold mt-2 mb-3'}>Graph Building User Interface</h4>
                         <p className={'mb-5'}>
                             {`To add nodes to the graph, use the button "Add Node" to the graph. You can drag around this node to make it look
                             better to your liking.`}
 
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
 
                             {`To connect two nodes together,  click on the two nodes you would like to connect and then click on "Connect Nodes". After 
 this, once again click on "Connect Nodes" and it will create and draw this edge with a weight of '1'.`}
 
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
 
                             {`To change the weight of an edge, click on the edge and a text-box will pop up below the graph. Then change the value
                             in the text-box and click the "Update Weight" button.`}
 
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
 
                             {`To delete a node, click on the node you wish to delete and click the "Delete Node" button.`}
 
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
 
                             {`To choose a starting node or the number of iterations, choose from either of their dropdown lists (depending on the algorithm).`}
 
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
 
                             {`To calculate a graph, click on the "Calculate" button. This will use the selected algorithm and will display step-by-step instructions on how the algorithm works.`}
 
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
 
                             {`To edit an existing graph that has been calculated, click on the "Edit" button.`}
 
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
 
                             {`To clear the graph, click on the "Rest" button.`}
                         </p>
@@ -103,27 +98,24 @@ this, once again click on "Connect Nodes" and it will create and draw this edge 
                             topology including link costs between all nodes. Furthermore, it takes an iterative approach to solving this 
                             problem.`}
                         </p>
-                        <h4 className={'has-text-weight-semibold mt-5 mb-3'}>
-                            Algorithm Information
-                        </h4>
+                        <h4 className={'has-text-weight-semibold mt-5 mb-3'}>Algorithm Information</h4>
                         <p className={'ml-5'}>
                             <ol>
                                 <li>{`Our implementation of this algorithm takes input of the graph in the form of an adjacency list representation.`}</li>
-                                <li>The graph auto-generates text based on the graph and procedure to describe what the
-                                    algorithm is doing, how it is
-                                    doing it and why.
+                                <li>
+                                    The graph auto-generates text based on the graph and procedure to describe what the
+                                    algorithm is doing, how it is doing it and why.
                                 </li>
                                 <li>{`Dijkstra's algorithm maintains a table which maintains information about the algorithm's work on the graph.`}</li>
                             </ol>
                         </p>
-                        <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
-                            Algorithm Understanding
-                        </h4>
+                        <h4 className={'has-text-weight-semibold mt-2 mb-3'}>Algorithm Understanding</h4>
                         <p className={'ml-5'}>
                             <ol>
                                 <li>{`We initialize the table which stores whether we have visited a node already or not, the shortest distance to the 
                                 nodes and the root/previous node that a node is connected to (dijkstra's algorithm forms a tree at the end).`}</li>
-                                <li>{`After this, we loop over all the nodes in the graph till we have visited all the nodes. We choose which node to 
+                                <li>
+                                    {`After this, we loop over all the nodes in the graph till we have visited all the nodes. We choose which node to 
                                 visit next by taking the shortest/closet node that we have not visited yet.`}
                                 </li>
                                 <li>{`We take the node we are currently evaluating and loop over all its neighbours to check whether the distances
@@ -142,35 +134,34 @@ this, once again click on "Connect Nodes" and it will create and draw this edge 
                             own tables of the shortest distances. These routers communicate with each other from time to time and exchange these 
                             tables and find better paths to reach other nodes.`}
                         </p>
-                        <h4 className={'has-text-weight-semibold mt-5 mb-3'}>
-                            Algorithm Information
-                        </h4>
+                        <h4 className={'has-text-weight-semibold mt-5 mb-3'}>Algorithm Information</h4>
                         <p className={'ml-5'}>
                             <ol>
-                                <li>Our implementation of this algorithm takes input of the graph in the form of an
+                                <li>
+                                    Our implementation of this algorithm takes input of the graph in the form of an
                                     adjacency list representation.
                                 </li>
-                                <li>The graph auto-generates text based on the graph and procedure to describe what the
-                                    algorithm is doing, how it is
-                                    doing it and why.
+                                <li>
+                                    The graph auto-generates text based on the graph and procedure to describe what the
+                                    algorithm is doing, how it is doing it and why.
                                 </li>
                                 <li>Each router maintains a table of the least cost paths to other nodes.</li>
                                 <li>This algorithm is derived using the Bellman-Ford equation.</li>
-                                <li>The number of iterations the algorithm performs to gain full knowledge of the
-                                    network is equal to the number of
-                                    nodes the graph has (worst case).
+                                <li>
+                                    The number of iterations the algorithm performs to gain full knowledge of the
+                                    network is equal to the number of nodes the graph has (worst case).
                                 </li>
                             </ol>
                         </p>
-                        <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
-                            Algorithm Understanding
-                        </h4>
+                        <h4 className={'has-text-weight-semibold mt-2 mb-3'}>Algorithm Understanding</h4>
                         <p className={'ml-5'}>
                             <ol>
-                                <li>{`We initialize the tables for each router. We then iterate through the node/router's neighbours and calculate the
+                                <li>
+                                    {`We initialize the tables for each router. We then iterate through the node/router's neighbours and calculate the
                                     distance to its neighbours.`}
                                 </li>
-                                <li>{`We then allow each node to communicate with its neighbours about each other's least-cost paths. We perform this for
+                                <li>
+                                    {`We then allow each node to communicate with its neighbours about each other's least-cost paths. We perform this for
                                     as many steps as the user asks for(with maximum of number of nodes).`}
                                 </li>
                                 <li>{`With each communication iteration, we check with the Bellman Ford equation whether the cost of the path is
@@ -184,4 +175,4 @@ this, once again click on "Connect Nodes" and it will create and draw this edge 
     )
 }
 
-export default Home;
+export default Home

@@ -24,13 +24,15 @@
   "devDependencies": {
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.10",
-    "eslint-plugin-sort-keys-fix": "^1.1.2"
+    "eslint-plugin-sort-keys-fix": "^1.1.2",
+    "prettier": "2.8.1",
+    "prettier-plugin-organize-imports": "^3.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "lint": "eslint . --ext=js",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "npm run lint -- --fix && npx prettier --write .",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
