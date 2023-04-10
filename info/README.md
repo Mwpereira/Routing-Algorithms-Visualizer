@@ -1,6 +1,6 @@
 # CPS 706 - Group 13
 
-# Project Info
+# Project Information
 
 ## Group Information 
 
@@ -15,6 +15,20 @@ Athavan Thanaraj - 501027195
 Umair Tariq - 501050119
 
 Jared Amaro - 500949423
+
+## Group Contribution
+
+Michael Pereira - Frontend Development
+
+Udbhav Prasad - Algorithm Development
+
+Himal Patel - Frontend Development
+
+Athavan Thanaraj - Frontend Development
+
+Umair Tariq - Algorithm Development
+
+Jared Amaro - Algorithm Development
 
 ## Installation Instructions
 

@@ -27,14 +27,25 @@ function Home() {
                                 <li>Jared Amaro - 500949423</li>
                             </ul>
                         </p>
-                        <h3 className={'has-text-weight-semibold is-size-4 mt-5  mb-3'}>Installation Instructions:</h3>
+                        <h3 className={'is-size-4 mt-5 mb-3 has-text-weight-semibold'}>Group Contribution:</h3>
+                        <p>
+                            <ul>
+                                <li>Michael Pereira - Frontend Development</li>
+                                <li>Udbhav Prasad - Algorithm Development</li>
+                                <li>Himal Patel - Frontend Development</li>
+                                <li>Athavan Thanaraj - Frontend Development</li>
+                                <li>Umair Tariq - Algorithm Development</li>
+                                <li>Jared Amaro - Algorithm Development</li>
+                            </ul>
+                        </p>
+                        <h3 className={'has-text-weight-semibold is-size-4 mt-5 mb-3'}>Installation Instructions:</h3>
                         <h4 className={'has-text-weight-semibold mt-2 mb-3'}>
                             Local Development <span className={'is-italic'}>(Recommended)</span>
                         </h4>
                         <p>
                             Required: Node.js Version 18+
                             <br />
-                            Steps on how to run the project locally are located within the `README.md` file in the root
+                            Steps on how to run the project locally are located within the <b>README.md</b> file in the root
                             of the project.
                         </p>
                         <h4 className={'has-text-weight-semibold mt-5 mb-3'}>Cloud Deployment</h4>
@@ -56,7 +67,7 @@ function Home() {
                             <br />
 
                             {`To connect two nodes together,  click on the two nodes you would like to connect and then click on "Connect Nodes". After 
-this, once again click on "Connect Nodes" and it will create and draw this edge with a weight of '1'.`}
+                            this, once again click on "Connect Nodes" and it will create and draw this edge with a weight of '1'.`}
 
                             <br />
                             <br />
