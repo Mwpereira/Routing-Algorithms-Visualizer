@@ -12,6 +12,7 @@ function calculateMinDistance(queue, distances) {
     let min_distance = Infinity
     let min_node = undefined
 
+    // loop over remaining nodes that are not visited
     for (let node of queue) {
         if (distances[node] < min_distance) {
             min_node = node
@@ -22,10 +23,13 @@ function calculateMinDistance(queue, distances) {
     return min_node
 }
 
-// Function to find graph, shortest path given a graph and start node. Graph is in form of adjacency list
+// Function to find graph, the shortest path given a graph and start node and prev array.
+// Graph is in form of adjacency list
 function dijkstra_path_calculator(startNode, graph, prev) {
     let path = []
 
+    // loop all nodes and trace prev array from dijkstra's algorithm to find the shortest path to all the nodes in
+    // the graph
     for (const node in graph) {
         let path_string = ``
         if (node === startNode) {
@@ -47,7 +51,7 @@ function dijkstra_path_calculator(startNode, graph, prev) {
     return path
 }
 
-// Function to find graph, shortest path given a graph and start node. Graph is in form of adjacency list
+// Function to find graph, the shortest path given a graph and start node. Graph is in form of adjacency list
 function dijkstra(graph, startNode) {
     let distances = {}
     let visited = {}
@@ -86,6 +90,7 @@ function dijkstra(graph, startNode) {
 
             // if distance is less than the current known distance in the table then update the distance
             if (distance < distances[neighbor]) {
+                // auto-generated text to explain what the algorithm is doing for the user
                 neighbor_text +=
                     `We find that the distance from ${currentNode} to ${neighbor} is closer than` +
                     ` the value in the table therefore we changed value ${distances[neighbor]} to ${distance}. ` +
@@ -103,6 +108,7 @@ function dijkstra(graph, startNode) {
             `Currently we are evaluating node ${currentNode} and we updated the table accordingly. We have ` +
             `visited the neighbours of ${currentNode} which are ${Object.keys(graph[currentNode])}. `
 
+        // check for whether algorithm has changed anything during this step
         if (neighbor_text.length > 0) {
             text = text + `\n\n` + neighbor_text
         } else {
@@ -113,9 +119,11 @@ function dijkstra(graph, startNode) {
                 `did not change any values in the table`
         }
 
+        // save each step
         steps.push({ table, text })
     }
 
+    // find the shortest path to each other node from a startNode
     const path = dijkstra_path_calculator(startNode, graph, prev)
 
     return { distances, path, prev, steps }
