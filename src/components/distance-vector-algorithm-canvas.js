@@ -275,6 +275,7 @@ const DistanceVectorAlgorithmCanvas = () => {
                                             onChange={(e) => setSelectedWeight(parseInt(e.target.value))}
                                             type="number"
                                             value={selectedWeight}
+                                            autoFocus={true}
                                         />
                                     </label>
                                     <button className={'button is-dark'} type="submit">
