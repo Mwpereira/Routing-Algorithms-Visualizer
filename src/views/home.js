@@ -15,28 +15,14 @@ function Home() {
                 <div className="container column is-12">
                     <div className="is-flex is-flex-direction-column is-size-5">
                         <h2 className={'title'} style={{ fontSize: '30px' }}>
-                            CPS 706 - Group 13
+                            Routing Algorithms
                         </h2>
-                        <h3 className={'is-size-4 mb-3 has-text-weight-semibold'}>Group Information:</h3>
+                        <h3 className={'is-size-4 mb-3 has-text-weight-semibold'}>Collaborators</h3>
                         <p>
                             <ul>
-                                <li>Michael Pereira - 500896409</li>
-                                <li>Udbhav Prasad - 500909034</li>
-                                <li>Himal Patel - 500873885</li>
-                                <li>Athavan Thanaraj - 501027195</li>
-                                <li>Umair Tariq - 501050119</li>
-                                <li>Jared Amaro - 500949423</li>
-                            </ul>
-                        </p>
-                        <h3 className={'is-size-4 mt-5 mb-3 has-text-weight-semibold'}>Group Contribution:</h3>
-                        <p>
-                            <ul>
-                                <li>Michael Pereira - Frontend Development</li>
-                                <li>Udbhav Prasad - Algorithm Development</li>
-                                <li>Himal Patel - Frontend Development</li>
-                                <li>Athavan Thanaraj - Frontend Development</li>
-                                <li>Umair Tariq - Algorithm Development</li>
-                                <li>Jared Amaro - Algorithm Development</li>
+                                <li>Michael Pereira</li>
+                                <li>Udbhav Prasad</li>
+                                <li>Himal Patel</li>
                             </ul>
                         </p>
                         <h3 className={'has-text-weight-semibold is-size-4 mt-5 mb-3'}>Installation Instructions:</h3>
