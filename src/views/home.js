@@ -15,7 +15,7 @@ function Home() {
                 <div className="container column is-12">
                     <div className="is-flex is-flex-direction-column is-size-5">
                         <h2 className={'title'} style={{ fontSize: '30px' }}>
-                            Routing Algorithms
+                            Summary
                         </h2>
                         <h3 className={'is-size-4 mb-3 has-text-weight-semibold'}>Collaborators</h3>
                         <p>
