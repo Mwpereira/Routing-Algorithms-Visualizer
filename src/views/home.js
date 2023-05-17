@@ -38,8 +38,8 @@ function Home() {
                         <h4 className={'has-text-weight-semibold mt-5 mb-3'}>Cloud Deployment</h4>
                         <p>
                             Site is located at{' '}
-                            <a href="https://routing-algorithms.netlify.app/" rel={'noreferrer'} target={'_blank'}>
-                                routing-algorithms.netlify.app
+                            <a href="https://routing-algorithms-visualizer.netlify.app/" rel={'noreferrer'} target={'_blank'}>
+                                routing-algorithms-visualizer.netlify.app
                             </a>
                         </p>
                         <h3 className={'has-text-weight-semibold is-size-4 mt-5  mb-3'}>
